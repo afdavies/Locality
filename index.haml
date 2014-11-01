@@ -1,0 +1,108 @@
+%html{:class =>"no-js", :lang =>"en"}
+	%head	
+		%meta{:charset =>"utf-8"}
+		%meta{:name =>"viewport", :content =>"width=device-width, initial-scale=1.0"}
+		%title Locality
+		%link{:href => "http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700,800", :rel => 'stylesheet', :type => 'text/css'}
+		%link{:rel =>"stylesheet", :href =>"stylesheets/app.css"}
+		%link{:rel =>"stylesheet", :href =>"stylesheets/style.css"}
+		%link{:href => "http://fonts.googleapis.com/css?family=Josefin+Sans:300|Montserrat:400,700", :rel => 'stylesheet', :type => "text/css"}
+		%script{:src =>"bower_components/modernizr/modernizr.js"}
+		%script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"}
+		%script{:src => "http://d3js.org/d3.v3.min.js"}
+		%script{:src => "http://d3js.org/topojson.v1.min.js"}
+		%script{:src => "js/localVis.js"}
+		%body
+			#wrapper
+				.row
+					#title.small-12.columns
+						%h1 Electric City
+				.row
+					#filters.small-2.columns
+						.row
+							.small-12.columns
+								%button{:href => "#", :data => {:dropdown => "drop1"}, :aria => { :expanded => "false"}}Year
+								%ul#drop1.f-dropdown{:data => {:dropdown_content => true}, :aria_hidden => "true"}
+									%li
+									%li
+										%a.2010{:href => "#"} 2010
+									%li
+										%a.2011{:href => "#"} 2011
+									%li
+										%a.2012{:href => "#"} 2012
+									%li
+										%a.2013{:href => "#"} 2013
+						.row
+							.small-12.columns
+								%button{:href => "#", :data => {:dropdown => "drop2"}, :aria => { :expanded => "false"}}Neighborhood
+								%ul#drop2.f-dropdown{:data => {:dropdown_content => true}, :aria_hidden => "true"}
+									%li 
+									%li
+										%a#fidi{:href => "#"} Financial District
+									%li
+										%a{:href => "#"} Downtown/Civic Center
+									%li
+										%a#soma{:href => "#"} SOMA
+									%li
+										%a{:href => "#"} Western SOMA
+									%li
+										%a{:href => "#"} Mission
+									%li
+										%a{:href => "#"} Outer Mission
+									%li
+										%a{:href => "#"} Potrero Hill
+									%li
+										%a{:href => "#"} Bayview
+									%li
+										%a{:href => "#"} Marina
+									%li
+										%a{:href => "#"} North Beach
+									%li
+										%a{:href => "#"} Nob Hill
+									%li
+										%a{:href => "#"} Chinatown
+									%li
+										%a{:href => "#"} Western Addition
+									%li
+										%a{:href => "#"} Inner Richmond
+									%li
+										%a{:href => "#"} Outer Richmond
+									%li
+										%a{:href => "#"} Seacliff
+									%li
+										%a{:href => "#"} Presidio Heights
+									%li
+										%a{:href => "#"} Haight Ashbury
+									%li
+										%a{:href => "#"} Inner Sunset
+									%li
+										%a{:href => "#"} Outer Sunset
+									%li
+										%a{:href => "#"} Bernal Heights
+									%li
+										%a{:href => "#"} Ocean View
+									%li
+										%a{:href => "#"} Crocker Amazon
+									%li
+										%a{:href => "#"} Diamond Heights
+									%li
+										%a{:href => "#"} Parkside
+
+
+						.row
+							.small-12.columns
+								%button{:href => "#", :data => {:dropdown => "drop3"}, :aria => { :expanded => "false"}}Status
+								%ul#drop3.f-dropdown{:data => {:dropdown_content => true}, :aria_hidden => "true"}
+									%li
+									%li
+										%a.passed{:href => "#"} Passed
+									%li
+										%a.failed{:href => "#"} Failed
+									%li
+										%a.na{:href => "#"} N/A
+								
+					#vis.small-9.columns.end
+
+		%script{:src => "bower_components/jquery/dist/jquery.min.js"}
+		%script{:src => "bower_components/foundation/js/foundation.min.js"}
+		%script{:src => "js/app.js"}
