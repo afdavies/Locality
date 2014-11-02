@@ -24,12 +24,13 @@ button{
 		color: #FDF172;
 		font-family: "Josefin Sans", sans-serif;
 		text-transform: uppercase;
-		letter-spacing: 0.5rem;	
+		letter-spacing: 1rem;	
 
 	}
 }
 
 button{
+	background-color: $blueColor;
 	&:focus{
 		outline: 0;
 	}

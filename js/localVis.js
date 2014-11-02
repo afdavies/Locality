@@ -100,16 +100,38 @@ $(document).ready(function(){
 						d3.select(this.parentNode).selectAll("text")
 							.remove();
 					});
+
 					$("#drop2>li>a").click(function(d){
-						var id = $(this).id;
-						var nodeLocation = d3.selectAll("circle")
-											.attr("class");
-						if(id != nodeLocation){
-							console.log(nodeLocation);
-							console.log("id different")
-						}else{
-							console.log("id same")
-						}
+
+						var myClass = $(this).attr("class");
+						var buttonText = $(this).text();
+						$(this).parents("ul").siblings("button").html(buttonText);
+						d3.selectAll("circle")
+						.attr("opacity", function(d) {
+							if (d.Neighborhood == myClass) {
+							return 1.0; //Set to opaque
+							} else {
+							return 0.0; //Set to transparent
+							}
+						});
+
+					})
+					$("#drop3>li>a").click(function(d){
+						var myClass = $(this).attr("class");
+						console.log(myClass);
+						var buttonText = $(this).text();
+						$(this).parents("ul").siblings("button").html(buttonText);
+						d3.selectAll("circle")
+						.transition()
+						.attr("r", function(d) {
+							if (d.Status2010 == myClass) {
+							return 5; //Set to opaque
+							} else {
+							return 0; //Set to transparent
+							}
+						})
+						.duration(500);
+
 					})
 			}); 
 		});
