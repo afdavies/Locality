@@ -1,11 +1,11 @@
-$bgColor: #222;
+$bgColor: #fff;
 $blueColor: #005F6B;
-$textColor: #F2F2F2;
+$green: #74E896;
 
 path{
 	-webkit-transition: all 0.5s ease;
 	&:hover{
-		fill: #F57576;
+		fill: #74E896;
 	}
 }
 
@@ -19,19 +19,52 @@ button{
 }
 #title{
 	text-align: center;
-	margin-top: 5%;
+	margin-top: 3%;
 	h1{
-		color: #FDF172;
+		font-size: 3rem;
+		color: $green;
 		font-family: "Josefin Sans", sans-serif;
 		text-transform: uppercase;
-		letter-spacing: 1rem;	
+		letter-spacing: 3rem;	
+		span{
+			color: #CCC;
+		}
 
 	}
 }
 
 button{
-	background-color: $blueColor;
+	background-color: white;
+	color: $green;
+	font-family: "Montserrat", sans-serif;
+	border: 2px solid $green;
+	-webkit-border-radius: 30px;
+	
+	&:hover{
+		background-color: white;
+	}
 	&:focus{
 		outline: 0;
+		background-color: $green;
+		color: white;
+
+	}
+
+}
+
+ul{
+	li{
+		a{
+			font-family: "Montserrat", sans-serif;
+		}
+	}
+}
+
+.f-dropdown{
+	&:before{
+		left: 99px;
+	}
+	&:after{
+		left: 98px;
 	}
 }

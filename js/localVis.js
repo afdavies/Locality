@@ -39,9 +39,10 @@ $(document).ready(function(){
 				   .enter()
 				   .append("path")
 				   .attr("d", path)
-				   .attr("fill", "#EF0B51")
-				   .attr("stroke", "#FDF172")
-				   .attr("stroke-weight", "3px");
+				   .attr("fill", "#FFFFFF")
+				   .attr("stroke", "#74E896")
+				   .attr("stroke-width", "2px");
+				   console.log(path);
 
 				 
 
@@ -68,7 +69,7 @@ $(document).ready(function(){
 					.attr("cy", function(d){
 						return projection([d.Longitude, d.Latitude])[1];
 					})
-					.style("fill", "#30223D")
+					.style("border", "1px")
 					
 					//hover changes
 
@@ -100,9 +101,28 @@ $(document).ready(function(){
 						d3.select(this.parentNode).selectAll("text")
 							.remove();
 					});
-
+					//Year Filter
+					$("#drop1>li>a").click(function(d){
+						var myClass = $(this).attr("class");
+						var buttonText = $(this).text();
+						if($(this).siblings('li').hasClass("selected")){
+							$(this).siblings().removeClass("selected")
+							$(this).addClass("selected");
+						}else{
+							$(this).addClass("selected");
+						}
+						$(this).parents("ul").siblings("button").html(buttonText)
+						// d3.selectAll("circle")
+						// .attr("opacity", function(d) {
+						// 	if (d.Neighborhood == myClass) {
+						// 	return 1.0; //Set to opaque
+						// 	} else {
+						// 	return 0.0; //Set to transparent
+						// 	}
+						// });	
+					})
+					//Neighborhood Filter
 					$("#drop2>li>a").click(function(d){
-
 						var myClass = $(this).attr("class");
 						var buttonText = $(this).text();
 						$(this).parents("ul").siblings("button").html(buttonText);
@@ -114,11 +134,10 @@ $(document).ready(function(){
 							return 0.0; //Set to transparent
 							}
 						});
-
 					})
+					//Status Filter
 					$("#drop3>li>a").click(function(d){
 						var myClass = $(this).attr("class");
-						console.log(myClass);
 						var buttonText = $(this).text();
 						$(this).parents("ul").siblings("button").html(buttonText);
 						d3.selectAll("circle")
@@ -128,6 +147,13 @@ $(document).ready(function(){
 							return 5; //Set to opaque
 							} else {
 							return 0; //Set to transparent
+							}
+						})
+						.style("fill", function(d) {
+							if (d.Status2010 == "DidNotComply"){
+							return "#000000"
+							} else if(d.Status2011 == "DidNotComply") {
+							return "#FF6074"; 						
 							}
 						})
 						.duration(500);
