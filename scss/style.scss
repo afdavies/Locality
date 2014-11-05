@@ -11,6 +11,7 @@ $pink: #FF6074;
 
 body{
 	background: $bgColor;
+	overflow: hidden;
 }
 
 p{
@@ -32,6 +33,29 @@ button{
 	// height: 100%;
 }
 
+#loader{
+	width: 100%;
+	height: 100%;
+	background-color: $green;
+	position: absolute;
+	z-index: 1000;
+	h1{
+		color: #fff;
+		font-family: "Josefin Sans", sans-serif;
+		text-align: center;
+		position: relative;
+  		top: 50%;
+ 	    transform: translateY(-50%);
+	}
+}
+
+.loaded{
+	-webkit-transition: all 2s ease-out;
+	-moz-transition: all 2s ease-out;
+	-webkit-transform: translateY(-110%);
+	-moz-transform: translateY(-110%);
+}
+
 #wrapper{
 	overflow: hidden;
 	margin-top: 1%;
@@ -42,9 +66,9 @@ button{
 }
 
 #logo{
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-right:0;
-	height: 80px;
+	height: 60px;
 }
 
 #title, #title2{
@@ -163,4 +187,8 @@ ul{
 	height: 10px;
 	-webkit-border-radius: 5px;
 	background-color: #000;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
 }

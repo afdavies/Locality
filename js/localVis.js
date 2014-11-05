@@ -112,7 +112,7 @@ $(document).ready(function(){
 					$("#drop1>li>a").click(function(d){
 						event.preventDefault();
 						var checkClass = $(this).parent().siblings().children("a").hasClass("selected");
-						var siblings = $(this).parent().siblings().children("a");
+						var $siblings = $(this).parent().siblings().children("a");
 						var myClass = $(this).attr("class");
 						yearCheck = myClass;
 						var buttonText = $(this).text();
@@ -120,9 +120,10 @@ $(document).ready(function(){
 						if($("button.noselect").hasClass("noselect")){
 							$("button.noselect").removeClass("noselect");
 						}
-						if(checkClass = true){
-							siblings.removeClass("selected");
+						if(checkClass == true){
+							$siblings.removeClass("selected");
 							$(this).addClass("selected");
+						}else if($(this).hasClass("selected") == true){
 						}else{
 							$(this).addClass("selected");
 						}
@@ -132,22 +133,50 @@ $(document).ready(function(){
 						.transition()
 						.attr("stroke-width", "0px")
 						.attr("r", function(d){
-							if(statusCheck == "AllResults" || statusCheck == undefined){
+							if(statusCheck == "AllResults" || statusCheck == undefined && locationCheck == undefined){
+								return 5
+							}else if(locationCheck == "AllNeighborhoods"){
 								return 5;
-							}else if(d.Neighborhood == locationCheck && yearCheck == "2010" && statusCheck == d.Status2010 && statusCheck != d.Status2011 && statusCheck != d.Status2012 && statusCheck != d.Status2013){
-								return 5;
-							}else if(d.Neighborhood == locationCheck && yearCheck == "2011" && statusCheck != d.Status2010 && statusCheck == d.Status2011 && statusCheck != d.Status2012 && statusCheck != d.Status2013){
-								return 5
-							}else if(d.Neighborhood == locationCheck && yearCheck == "2012" && statusCheck != d.Status2010 && statusCheck != d.Status2011 && statusCheck == d.Status2012 && statusCheck != d.Status2013){
-								return 5
-							}else if(d.Neighborhood == locationCheck && yearCheck == "2013" && statusCheck != d.Status2010 && statusCheck != d.Status2011 && statusCheck != d.Status2012 && statusCheck == d.Status2013){
-								return 5
+							}else if(d.Neighborhood == locationCheck){
+								if(statusCheck == undefined){
+									return 5;	
+									if(yearCheck == "2010"){
+										if(statusCheck == d.Status2010){
+											return 5;
+										}else{
+											return 0;
+										}
+									}
+									if(yearCheck == "2011"){
+										if(statusCheck == d.Status2011){
+											return 5
+										}else{
+											return 0
+										}
+									}
+									if(yearCheck == "2012"){
+										if(statusCheck == d.Status2012){
+											return 5
+										}else{
+											return 0
+										}
+									}
+									if(yearCheck == "2013"){
+										if(statusCheck == d.Status2013){
+											return 5
+										}else{
+											return 0
+										}
+									}
+									}else{
+										return 0
+									}
 							}else{
 								return 0
 							}
 						})
 						.style("fill", function(d) {
-							if ($("#drop1>li>a.2010").hasClass("selected")){
+							if (yearCheck = "2010"){
 								if(d.Status2010 == "Complied"){
 									return "#4FF2FF";
 								}else if (d.Status2010 == "DidNotComply"){
@@ -155,7 +184,7 @@ $(document).ready(function(){
 								} else if(d.Status2010 == "NA") {
 									return "#CCCCCC"; 						
 								}
-							}else if ($("#drop1>li>a.2011").hasClass("selected")){
+							}else if (yearCheck = "2011"){
 								if(d.Status2011 == "Complied"){
 									return "#4FF2FF";
 								}else if (d.Status2011 == "DidNotComply"){
@@ -163,7 +192,7 @@ $(document).ready(function(){
 								} else if(d.Status2011 == "NA") {
 									return "#CCCCCC"; 						
 								}
-							}else if ($("#drop1>li>a.2012").hasClass("selected")){
+							}else if (yearCheck = "2012"){
 								if(d.Status2012 == "Complied"){
 									return "#4FF2FF";
 								}else if (d.Status2012 == "DidNotComply"){
@@ -171,7 +200,7 @@ $(document).ready(function(){
 								} else if(d.Status2012 == "NA") {
 									return "#CCCCCC"; 						
 								}
-							}else if ($("#drop1>li>a.2013").hasClass("selected")){
+							}else if (yearCheck = "2013"){
 								if(d.Status2013 == "Complied"){
 									return "#4FF2FF";
 								}else if (d.Status2013 == "DidNotComply"){
@@ -192,27 +221,81 @@ $(document).ready(function(){
 						var buttonText = $(this).text();
 						var checkClass = $(this).parent().siblings().children("a").hasClass("selected");
 						var $siblings = $(this).parent().siblings().children("a");
-						console.log(locationCheck);
 						$(this).parents("ul").siblings("button").html(buttonText);
-						if(checkClass = true){
+						if(checkClass == true){
 							$siblings.removeClass("selected");
 							$(this).addClass("selected");
+						}else if($(this).hasClass("selected") == true){
 						}else{
 							$(this).addClass("selected");
 						}
 						d3.selectAll("circle")
 						.transition()
 						.attr("r", function(d) {
-							if(myClass == "AllNeighborhoods"){
-								return 5;
-							}
-							else if (d.Neighborhood == myClass){
-							return 5; 
-							} else {
-							return 0; 
+							if(yearCheck == undefined){
+								if(d.Neighborhood == locationCheck){
+									return 5;
+								}else if(locationCheck == undefined || locationCheck == "AllNeighborhoods"){
+									return 5;
+								}else{
+									return 0;
+								}
+							}else if(d.Neighborhood == locationCheck){
+								if(statusCheck == undefined){
+									return 5;
+								}else if(yearCheck == "2010" && d.Status2010 == statusCheck){
+									return 5;
+								}else if(yearCheck == "2011" && d.Status2011 == statusCheck){
+									return 5;
+								}else if(yearCheck == "2012" && d.Status2012 == statusCheck){
+									return 5;
+								}else if(yearCheck == "2013" && d.Status2013 == statusCheck){
+									return 5;
+								}else{
+									return 0
+								}
+							}else{
+								return 0; 
 							}
 						})
-						.duration(500);
+						.style("fill", function(d) {
+							if(yearCheck != undefined){
+								if (yearCheck = "2010"){
+									if(d.Status2010 == "Complied"){
+										return "#4FF2FF";
+									}else if (d.Status2010 == "DidNotComply"){
+										return "#FF6074";
+									} else if(d.Status2010 == "NA") {
+										return "#CCCCCC"; 						
+									}
+								}else if (yearCheck = "2011"){
+									if(d.Status2011 == "Complied"){
+										return "#4FF2FF";
+									}else if (d.Status2011 == "DidNotComply"){
+										return "#FF6074";
+									} else if(d.Status2011 == "NA") {
+										return "#CCCCCC"; 						
+									}
+								}else if (yearCheck = "2012"){
+									if(d.Status2012 == "Complied"){
+										return "#4FF2FF";
+									}else if (d.Status2012 == "DidNotComply"){
+										return "#FF6074";
+									} else if(d.Status2012 == "NA") {
+										return "#CCCCCC"; 						
+									}
+								}else if (yearCheck = "2013"){
+									if(d.Status2013 == "Complied"){
+										return "#4FF2FF";
+									}else if (d.Status2013 == "DidNotComply"){
+										return "#FF6074";
+									} else if(d.Status2013 == "NA") {
+										return "#CCCCCC"; 						
+									}
+								}
+							}
+						})
+						.duration(1000);
 					})
 
 					//Status Filter
@@ -224,9 +307,10 @@ $(document).ready(function(){
 						var buttonText = $(this).text();
 						console.log(locationCheck);
 						statusCheck = myClass;
-						if(checkClass = true){
+						if(checkClass == true){
 							$siblings.removeClass("selected");
 							$(this).addClass("selected");
+						}else if($(this).hasClass("selected") == true){
 						}else{
 							$(this).addClass("selected");
 						}
@@ -234,25 +318,140 @@ $(document).ready(function(){
 						d3.selectAll("circle")
 						.transition()
 						.attr("r", function(d){
-							if($(".2010").hasClass("selected") && d.Status2010 == myClass && d.Neighborhood == locationCheck){
-								return 5;
-							}else if($(".2011").hasClass("selected") && d.Status2011 == myClass && d.Neighborhood == locationCheck){
-								return 5;
-							}else if($(".2012").hasClass("selected") && d.Status2012 == myClass && d.Neighborhood == locationCheck){
-								return 5; 
-							}else if($(".2013").hasClass("selected") && d.Status2013 == myClass && d.Neighborhood == locationCheck){
-								return 5;
-							}else if($("#AllResults").hasClass("selected") || $("#drop3>li>a").hasClass("selected") == false && d.Neighborhood == locationCheck){
-								return 5;
-							}else{
+							if(statusCheck == "AllResults"){
+								if(d.Neighborhood == locationCheck){
+									return 5;
+									console.log("all")
+								}else{
+									return 0;
+								}
+							}
+							if(d.Neighborhood == locationCheck){
+								if(yearCheck = "2010"){
+									if(d.Status2010 == statusCheck){
+										return 5;
+									}else{
+										return 0;
+									}
+								}else if(yearCheck = "2011"){
+									if(d.Status2011 == statusCheck){
+										return 5;
+									}else{
+										return 0;
+									}
+								}else if(yearCheck = "2012"){
+									if(d.Status2012 == statusCheck){
+										return 5;
+									}else{
+										return 0;
+									}
+								}else if(yearCheck = "2013"){
+									if(d.Status2013 == statusCheck){
+										return 5;
+									}else{
+										return 0;
+									}
+								}else{
+									return 0;
+								}
+							}else if(locationCheck == undefined){
+								if(yearCheck = "2010"){
+									if(d.Status2010 == statusCheck){
+										return 5;
+									}else{
+										return 0
+									}
+								}
+								if(yearCheck = "2011"){
+									if(d.Status2011 == statusCheck){
+										return 5;
+									}else{
+										return 0
+									}
+								}
+								if(yearCheck = "2012"){
+									if(d.Status2012 == statusCheck){
+										return 5;
+									}else{
+										return 0
+									}
+								}
+								if(yearCheck = "2013"){
+									if(d.Status2013 == statusCheck){
+										return 5;
+									}else{
+										return 0
+									}
+								}else{
+									return 0;
+								}
+							}else if(locationCheck == "AllNeighborhoods"){
+										if(yearCheck = "2010"){
+									if(d.Status2010 == statusCheck){
+										return 5;
+									}else{
+										return 0;
+									}
+								}else if(yearCheck = "2011"){
+									if(d.Status2011 == statusCheck){
+										return 5;
+									}else{
+										return 0;
+									}
+								}else if(yearCheck = "2012"){
+									if(d.Status2012 == statusCheck){
+										return 5;
+									}else{
+										return 0;
+									}
+								}else if(yearCheck = "2013"){
+									if(d.Status2013 == statusCheck){
+										return 5;
+									}else{
+										return 0;
+									}
+								}else{
+									return 0;
+								}
+							}else if(locationCheck == undefined){
+								if(yearCheck = "2010"){
+									if(d.Status2010 == statusCheck){
+										return 5;
+									}else{
+										return 0
+									}
+								}
+								if(yearCheck = "2011"){
+									if(d.Status2011 == statusCheck){
+										return 5;
+									}else{
+										return 0
+									}
+								}
+								if(yearCheck = "2012"){
+									if(d.Status2012 == statusCheck){
+										return 5;
+									}else{
+										return 0
+									}
+								}
+								if(yearCheck = "2013"){
+									if(d.Status2013 == statusCheck){
+										return 5;
+									}else{
+										return 0
+									}
+								}else{
+									return 0;
+								}
+							}else{ 
 								return 0;
 							}
 						})
-						//Check selected year selected to confirm pass status
-					
-						.duration(500);
+						.duration(1000);
 
 					})
 			}); 
 		});
+		$("#loader").addClass("loaded");
 });
