@@ -5,7 +5,9 @@
     <title>Locality</title>
     <link href='stylesheets/app.css' rel='stylesheet'>
     <link href='stylesheets/style.css' rel='stylesheet'>
-    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:300|Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:300|Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+    <link href='../img/favicon.ico' rel='shortcut icon' type='image/x-icon'>
+    <link href='../img/favicon.ico' rel='icon' type='image/x-icon'>
     <script src='bower_components/modernizr/modernizr.js'></script>
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
     <script src='http://d3js.org/d3.v3.min.js'></script>
@@ -14,8 +16,14 @@
     <body>
       <div id='wrapper'>
         <div class='row'>
-          <div class='small-12 columns' id='title'>
+          <div class='small-1 columns' id='logoContainer'>
+            <img id='logo' src='../img/Lightbulbcity.svg'>
+          </div>
+          <div class='small-11 columns' id='title'>
             <h1>Electri<span>City</span></h1>
+          </div>
+          <div class='small-12 columns' id='title2'>
+            <h1><span>Electri</span>C<span>ity</span></h1>
           </div>
         </div>
         <div class='row'>
@@ -24,7 +32,6 @@
               <div class='small-12 columns'>
                 <button aria-expanded='false' data-dropdown='drop1' href='#'>Year</button>
                 <ul aria_hidden='true' class='f-dropdown' data-dropdown-content id='drop1'>
-                  <li></li>
                   <li>
                     <a class='2010' href='#'>2010</a>
                   </li>
@@ -57,7 +64,7 @@
                     <a class='SOMA' href='#'>SOMA</a>
                   </li>
                   <li>
-                    <a href='#'>Western SOMA</a>
+                    <a class='outersoma' href='#'>Outer SOMA</a>
                   </li>
                   <li>
                     <a class='Mission' href='#'>Mission</a>
@@ -84,67 +91,87 @@
                     <a class='Chinatown' href='#'>Chinatown</a>
                   </li>
                   <li>
-                    <a href='#'>Western Addition</a>
+                    <a class='WesternAddition' href='#'>Western Addition</a>
                   </li>
                   <li>
-                    <a href='#'>Inner Richmond</a>
+                    <a class='InnerRichmond' href='#'>Inner Richmond</a>
                   </li>
                   <li>
-                    <a href='#'>Outer Richmond</a>
+                    <a class='OuterRichmond' href='#'>Outer Richmond</a>
                   </li>
                   <li>
-                    <a href='#'>Seacliff</a>
+                    <a class='Seacliff' href='#'>Seacliff</a>
                   </li>
                   <li>
-                    <a href='#'>Presidio Heights</a>
+                    <a class='PresidioHeights' href='#'>Presidio Heights</a>
                   </li>
                   <li>
-                    <a href='#'>Haight Ashbury</a>
+                    <a class='HaightAshbury' href='#'>Haight Ashbury</a>
                   </li>
                   <li>
-                    <a href='#'>Inner Sunset</a>
+                    <a class='InnerSunset' href='#'>Inner Sunset</a>
                   </li>
                   <li>
-                    <a href='#'>Outer Sunset</a>
+                    <a class='OuterSunset' href='#'>Outer Sunset</a>
                   </li>
                   <li>
-                    <a href='#'>Bernal Heights</a>
+                    <a class='BernalHeights' href='#'>Bernal Heights</a>
                   </li>
                   <li>
-                    <a href='#'>Ocean View</a>
+                    <a class='OceanView' href='#'>Ocean View</a>
                   </li>
                   <li>
-                    <a href='#'>Crocker Amazon</a>
+                    <a class='CrockerAmazon' href='#'>Crocker Amazon</a>
                   </li>
                   <li>
-                    <a href='#'>Diamond Heights</a>
+                    <a class='DiamondHeights' href='#'>Diamond Heights</a>
                   </li>
                   <li>
-                    <a href='#'>Parkside</a>
+                    <a class='Parkside' href='#'>Parkside</a>
                   </li>
                 </ul>
               </div>
             </div>
             <div class='row'>
               <div class='small-12 columns'>
-                <button aria-expanded='false' data-dropdown='drop3' href='#'>Status</button>
+                <button aria-expanded='false' class='noselect' data-dropdown='drop3' href='#'>Status</button>
                 <ul aria_hidden='true' class='f-dropdown' data-dropdown-content id='drop3'>
-                  <li></li>
                   <li>
-                    <a class='Complied' href='#'>Passed</a>
+                    <a class='AllResults' href='#' id='AllResults'>All Results</a>
                   </li>
                   <li>
-                    <a class='DidNotComply' href='#'>Failed</a>
+                    <a class='Complied' href='#' id='Complied'>Passed</a>
                   </li>
                   <li>
-                    <a class='NA' href='#'>N/A</a>
+                    <a class='DidNotComply' href='#' id='DidNotComply'>Failed</a>
+                  </li>
+                  <li>
+                    <a class='NA' href='#' id='NA'>N/A</a>
                   </li>
                 </ul>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='small-3 columns'>
+                <p>Passed</p>
+                <div class='circle' id='red'></div>
+              </div>
+              <div class='small-3 columns'>
+                <p>Failed</p>
+                <div class='circle' id='blue'></div>
+              </div>
+              <div class='small-3 columns'>
+                <p>N/A</p>
+                <div class='circle' id='gray'></div>
+              </div>
+              <div class='small-3 columns'>
+                <div class='circle' id='exempt'></div>
               </div>
             </div>
           </div>
           <div class='small-9 columns end' id='vis'></div>
         </div>
+        <div class='row'></div>
       </div>
     </body>
     <script src='bower_components/jquery/dist/jquery.min.js'></script>

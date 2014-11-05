@@ -5,7 +5,9 @@
 		%title Locality
 		%link{:rel =>"stylesheet", :href =>"stylesheets/app.css"}
 		%link{:rel =>"stylesheet", :href =>"stylesheets/style.css"}
-		%link{:href => "http://fonts.googleapis.com/css?family=Josefin+Sans:300|Montserrat:400,700", :rel => 'stylesheet', :type => "text/css"}
+		%link{:href => "http://fonts.googleapis.com/css?family=Josefin+Sans:300|Source+Sans+Pro:400,700", :rel => 'stylesheet', :type => "text/css"}
+		%link{:rel => "shortcut icon", :href => "../img/favicon.ico", :type => "image/x-icon"}
+		%link{:rel => "icon", :href => "../img/favicon.ico", :type =>"image/x-icon"}
 		%script{:src =>"bower_components/modernizr/modernizr.js"}
 		%script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"}
 		%script{:src => "http://d3js.org/d3.v3.min.js"}
@@ -14,15 +16,21 @@
 		%body
 			#wrapper
 				.row
-					#title.small-12.columns
+					#logoContainer.small-1.columns
+						%img#logo{:src => "../img/Lightbulbcity.svg"}
+					#title.small-11.columns
 						%h1 Electri<span>City</span>
+					#title2.small-12.columns
+						%h1 <span>Electri</span>C<span>ity</span>
+				-# .row
+				-# 	.small-10.small-offset-1.columns.end
+				-# 		%p#desc A visualization of 1,896 commerical buildings and whether they passed or failed annual San Francisco energy audits from 2010-2013. 
 				.row
 					#filters.small-3.columns
 						.row
 							.small-12.columns
 								%button{:href => "#", :data => {:dropdown => "drop1"}, :aria => { :expanded => "false"}}Year
 								%ul#drop1.f-dropdown{:data => {:dropdown_content => true}, :aria_hidden => "true"}
-									%li
 									%li
 										%a.2010{:href => "#"} 2010
 									%li
@@ -44,7 +52,7 @@
 									%li
 										%a.SOMA{:href => "#"} SOMA
 									%li
-										%a{:href => "#"} Western SOMA
+										%a.outersoma{:href => "#"} Outer SOMA
 									%li
 										%a.Mission{:href => "#"} Mission
 									%li
@@ -62,46 +70,62 @@
 									%li
 										%a.Chinatown{:href => "#"} Chinatown
 									%li
-										%a{:href => "#"} Western Addition
+										%a.WesternAddition{:href => "#"} Western Addition
 									%li
-										%a{:href => "#"} Inner Richmond
+										%a.InnerRichmond{:href => "#"} Inner Richmond
 									%li
-										%a{:href => "#"} Outer Richmond
+										%a.OuterRichmond{:href => "#"} Outer Richmond
 									%li
-										%a{:href => "#"} Seacliff
+										%a.Seacliff{:href => "#"} Seacliff
 									%li
-										%a{:href => "#"} Presidio Heights
+										%a.PresidioHeights{:href => "#"} Presidio Heights
 									%li
-										%a{:href => "#"} Haight Ashbury
+										%a.HaightAshbury{:href => "#"} Haight Ashbury
 									%li
-										%a{:href => "#"} Inner Sunset
+										%a.InnerSunset{:href => "#"} Inner Sunset
 									%li
-										%a{:href => "#"} Outer Sunset
+										%a.OuterSunset{:href => "#"} Outer Sunset
 									%li
-										%a{:href => "#"} Bernal Heights
+										%a.BernalHeights{:href => "#"} Bernal Heights
 									%li
-										%a{:href => "#"} Ocean View
+										%a.OceanView{:href => "#"} Ocean View
 									%li
-										%a{:href => "#"} Crocker Amazon
+										%a.CrockerAmazon{:href => "#"} Crocker Amazon
 									%li
-										%a{:href => "#"} Diamond Heights
+										%a.DiamondHeights{:href => "#"} Diamond Heights
 									%li
-										%a{:href => "#"} Parkside
+										%a.Parkside{:href => "#"} Parkside
 
 
 						.row
 							.small-12.columns
-								%button{:href => "#", :data => {:dropdown => "drop3"}, :aria => { :expanded => "false"}}Status
+								%button.noselect{:href => "#", :data => {:dropdown => "drop3"}, :aria => { :expanded => "false"}}Status
 								%ul#drop3.f-dropdown{:data => {:dropdown_content => true}, :aria_hidden => "true"}
 									%li
+										%a#AllResults.AllResults{:href => "#"} All Results
 									%li
-										%a.Complied{:href => "#"} Passed
+										%a#Complied.Complied{:href => "#"} Passed
 									%li
-										%a.DidNotComply{:href => "#"} Failed
+										%a#DidNotComply.DidNotComply{:href => "#"} Failed
 									%li
-										%a.NA{:href => "#"} N/A
+										%a#NA.NA{:href => "#"} N/A
+						.row
+							
+							.small-3.columns
+								%p Passed
+								#red.circle
+							.small-3.columns
+								%p Failed
+								#blue.circle
+							.small-3.columns
+								%p N/A
+								#gray.circle
+							.small-3.columns
+								#exempt.circle
 								
 					#vis.small-9.columns.end
+				.row
+
 
 		%script{:src => "bower_components/jquery/dist/jquery.min.js"}
 		%script{:src => "bower_components/foundation/js/foundation.min.js"}

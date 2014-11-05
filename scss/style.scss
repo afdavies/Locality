@@ -1,23 +1,53 @@
 $bgColor: #fff;
-$blueColor: #005F6B;
 $green: #74E896;
+$pink: #FF6074;
 
-path{
-	-webkit-transition: all 0.5s ease;
-	&:hover{
-		fill: #74E896;
-	}
-}
+// path{
+// 	-webkit-transition: all 0.5s ease;
+// 	&:hover{
+// 		fill: #74E896;
+// 	}
+// }
 
 body{
 	background: $bgColor;
 }
 
+p{
+	display: inline;
+	font-size: 0.5rem;
+	color: #ccc;
+}
+
+// #desc{
+// 	font-family: "Source Sans Pro", sans-serif;
+// 	// color: #ccc;
+// 	font-size: 0.9rem;
+// 	span{
+// 	}
+// }
+
 button{
 	width: 100%;
 	// height: 100%;
 }
-#title{
+
+#wrapper{
+	overflow: hidden;
+	margin-top: 1%;
+}
+#logoContainer{
+	margin-right: -5px;
+	margin-bottom: 10px;
+}
+
+#logo{
+	margin-top: 20px;
+	margin-right:0;
+	height: 80px;
+}
+
+#title, #title2{
 	text-align: center;
 	margin-top: 3%;
 	h1{
@@ -25,25 +55,55 @@ button{
 		color: $green;
 		font-family: "Josefin Sans", sans-serif;
 		text-transform: uppercase;
-		letter-spacing: 3rem;	
+		letter-spacing: 3.5rem;	
 		span{
-			color: #CCC;
+			color: #222;
 		}
 
 	}
 }
 
+#title2{
+	margin-top: -8%;
+	left: 15px;
+	z-index: 500;
+	h1{
+		opacity: 0.0;
+		color: $green;
+		span{
+			opacity: 0;
+		}
+	}
+}
+
+.transparent{
+	opacity: 0.5;
+}
+
 button{
+	margin-top: 25px;
 	background-color: white;
-	color: $green;
-	font-family: "Montserrat", sans-serif;
+	color: #222;
+	font-family: "Source Sans Pro", sans-serif;
+	font-weight: bold;
 	border: 2px solid $green;
-	-webkit-border-radius: 30px;
+	padding: 10px;
+	-webkit-transition: all 0.25s ease;
+	// -webkit-border-radius: 30px;
 	
 	&:hover{
-		background-color: white;
+		background-color: $green;
+		color: #fff;
 	}
 	&:focus{
+		// border: 2px solid $green;
+		background-color: $green;
+		color: #fff;
+		outline: none;
+
+	}
+	&:active{
+		// border: 2px solid $green;
 		outline: 0;
 		background-color: $green;
 		color: white;
@@ -61,10 +121,46 @@ ul{
 }
 
 .f-dropdown{
+	text-align: center;
+	border: none;
+	background-color: #EEEEEE;
+	max-width: 88%;
+	max-height: 350px;
+	overflow: auto;
+	li{
+		&:hover{
+			background-color: #FFFFFF;
+		}
+	}
+
 	&:before{
 		left: 99px;
 	}
 	&:after{
 		left: 98px;
 	}
+}
+
+#Complied{
+	color: #4FF2FF;
+}
+#DidNotComply{
+	color: $pink;
+}
+#NA{
+	color: #CCCCCC;
+}
+.noselect{
+	opacity: 0.3;
+	pointer-events: none;
+}
+
+#key{
+	height: 20px;
+}
+.circle{
+	width: 10px;
+	height: 10px;
+	-webkit-border-radius: 5px;
+	background-color: #000;
 }
