@@ -1,4 +1,4 @@
-$bgColor: #fff;
+$bgColor: #000;
 $green: #74E896;
 $pink: #FF6074;
 
@@ -61,7 +61,7 @@ button{
 	margin-top: 1%;
 }
 #logoContainer{
-	margin-right: -5px;
+	// margin-right: -5px;
 	margin-bottom: 10px;
 }
 
@@ -72,33 +72,23 @@ button{
 }
 
 #title, #title2{
-	text-align: center;
-	margin-top: 3%;
+	// text-align: center;
+	margin-top: 4.5%;
 	h1{
-		font-size: 3rem;
-		color: $green;
+		font-size: 1rem;
+		color: #ccc;
 		font-family: "Josefin Sans", sans-serif;
+		font-weight: bold;
 		text-transform: uppercase;
-		letter-spacing: 3.5rem;	
-		span{
-			color: #222;
-		}
-
-	}
-}
-
-#title2{
-	margin-top: -8%;
-	left: 15px;
-	z-index: 500;
-	h1{
-		opacity: 0.0;
+		letter-spacing: 0.75rem;	
+			span{
 		color: $green;
-		span{
-			opacity: 0;
+
 		}
+
 	}
 }
+
 
 .transparent{
 	opacity: 0.5;
@@ -106,8 +96,8 @@ button{
 
 button{
 	margin-top: 25px;
-	background-color: white;
-	color: #222;
+	background-color: $bgColor;
+	color: #fff;
 	font-family: "Source Sans Pro", sans-serif;
 	font-weight: bold;
 	border: 2px solid $green;
@@ -191,4 +181,12 @@ ul{
 
 ::-webkit-scrollbar { 
     display: none; 
+}
+
+svg{
+	-webkit-transform: rotate(-15deg);
+}
+
+path{
+	fill: $bgColor
 }

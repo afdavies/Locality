@@ -69,9 +69,9 @@ $(document).ready(function(){
 					.attr("cy", function(d){
 						return projection([d.Longitude, d.Latitude])[1];
 					})
-					.attr("fill", "white")
-					.attr("stroke", "#222222")
-					.attr("stroke-width", "2px")
+					.attr("fill", "#222222")
+					.attr("stroke", "#CCCCCC")
+					.attr("stroke-width", "1px")
 					
 					//Hover changes
 
@@ -133,10 +133,40 @@ $(document).ready(function(){
 						.transition()
 						.attr("stroke-width", "0px")
 						.attr("r", function(d){
-							if(statusCheck == "AllResults" || statusCheck == undefined && locationCheck == undefined){
-								return 5
-							}else if(locationCheck == "AllNeighborhoods"){
+
+							if(locationCheck == undefined){
 								return 5;
+							}else if(locationCheck == "AllNeighborhoods"){
+								if(yearCheck == "2010"){
+										if(statusCheck == d.Status2010){
+											return 5;
+										}else{
+											return 0;
+										}
+									}
+									if(yearCheck == "2011"){
+										if(statusCheck == d.Status2011){
+											return 5
+										}else{
+											return 0
+										}
+									}
+									if(yearCheck == "2012"){
+										if(statusCheck == d.Status2012){
+											return 5
+										}else{
+											return 0
+										}
+									}
+									if(yearCheck == "2013"){
+										if(statusCheck == d.Status2013){
+											return 5
+										}else{
+											return 0
+										}
+									}else{
+										return 0
+									}
 							}else if(d.Neighborhood == locationCheck){
 								if(statusCheck == undefined){
 									return 5;	
@@ -184,7 +214,7 @@ $(document).ready(function(){
 								} else if(d.Status2010 == "NA") {
 									return "#CCCCCC"; 						
 								}
-							}else if (yearCheck = "2011"){
+							}else if(yearCheck = "2011"){
 								if(d.Status2011 == "Complied"){
 									return "#4FF2FF";
 								}else if (d.Status2011 == "DidNotComply"){
@@ -192,7 +222,7 @@ $(document).ready(function(){
 								} else if(d.Status2011 == "NA") {
 									return "#CCCCCC"; 						
 								}
-							}else if (yearCheck = "2012"){
+							}else if(yearCheck = "2012"){
 								if(d.Status2012 == "Complied"){
 									return "#4FF2FF";
 								}else if (d.Status2012 == "DidNotComply"){
@@ -200,7 +230,7 @@ $(document).ready(function(){
 								} else if(d.Status2012 == "NA") {
 									return "#CCCCCC"; 						
 								}
-							}else if (yearCheck = "2013"){
+							}else if(yearCheck = "2013"){
 								if(d.Status2013 == "Complied"){
 									return "#4FF2FF";
 								}else if (d.Status2013 == "DidNotComply"){
