@@ -6,8 +6,8 @@
     <link href='stylesheets/app.css' rel='stylesheet'>
     <link href='stylesheets/style.css' rel='stylesheet'>
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:300|Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
-    <link href='../img/favicon.ico' rel='shortcut icon' type='image/x-icon'>
-    <link href='../img/favicon.ico' rel='icon' type='image/x-icon'>
+    <link href='../Locality/img/favicon.ico' rel='shortcut icon' type='image/x-icon'>
+    <link href='../Locality/img/favicon.ico' rel='icon' type='image/x-icon'>
     <script src='bower_components/modernizr/modernizr.js'></script>
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
     <script src='http://d3js.org/d3.v3.min.js'></script>
@@ -154,20 +154,21 @@
               </div>
             </div>
             <div class='row'>
-              <div class='small-3 columns'>
+              <div class='small-2 columns key'>
                 <p>Passed</p>
-                <div class='circle' id='red'></div>
+                <div id='red'></div>
               </div>
-              <div class='small-3 columns'>
+              <div class='small-2 columns key'>
                 <p>Failed</p>
-                <div class='circle' id='blue'></div>
+                <div id='blue'></div>
               </div>
-              <div class='small-3 columns'>
+              <div class='small-2 columns key'>
                 <p>N/A</p>
-                <div class='circle' id='gray'></div>
+                <div id='gray'></div>
               </div>
-              <div class='small-3 columns'>
-                <div class='circle' id='exempt'></div>
+              <div class='small-2 columns end key'>
+                <p>Exempt</p>
+                <div id='exempt'></div>
               </div>
             </div>
           </div>
@@ -176,10 +177,15 @@
         <div class='row'></div>
       </div>
       <ol class='joyride-list' data-joyride>
-        <li data_options='prev_button: false' data_text='status'>
-          <p>Please select a year before selecting a status option.</p>
+        <li data_id='status' data_options='prev_button: false' data_text='status'>
+          <p>Please select a year before selecting a status.</p>
         </li>
       </ol>
+      <div class='row'>
+        <div class='small-12 columns' id='footer'>
+          <p>&#169; 2014 Andy Davies. Coded for USF's Information Visualization course on Nov. 9,2014. Energy audit dataset courtesy of <a href="https://data.sfgov.org/">DataSF</a></p>
+        </div>
+      </div>
     </body>
     <script src='bower_components/jquery/dist/jquery.min.js'></script>
     <script src='bower_components/foundation/js/foundation.min.js'></script>

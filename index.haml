@@ -6,8 +6,8 @@
 		%link{:rel =>"stylesheet", :href =>"stylesheets/app.css"}
 		%link{:rel =>"stylesheet", :href =>"stylesheets/style.css"}
 		%link{:href => "http://fonts.googleapis.com/css?family=Josefin+Sans:300|Source+Sans+Pro:400,700", :rel => 'stylesheet', :type => "text/css"}
-		%link{:rel => "shortcut icon", :href => "../img/favicon.ico", :type => "image/x-icon"}
-		%link{:rel => "icon", :href => "../img/favicon.ico", :type =>"image/x-icon"}
+		%link{:rel => "shortcut icon", :href => "../Locality/img/favicon.ico", :type => "image/x-icon"}
+		%link{:rel => "icon", :href => "../Locality/img/favicon.ico", :type =>"image/x-icon"}
 		%script{:src =>"bower_components/modernizr/modernizr.js"}
 		%script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"}
 		%script{:src => "http://d3js.org/d3.v3.min.js"}
@@ -23,9 +23,6 @@
 						%img#logo{:src => "../Locality/img/Lightbulbcity.svg"}
 					#title.small-11.columns
 						%h1 Electri<span id="city">City</span>&nbsp<span id="desc">A visualization of 1,896 commerical buildings and their annual San Francisco energy audit results from 2010-2013. 
-				-# .row
-				-# 	.small-12.small-offset-1.columns.end
-				-# 		%p
 				.row
 					#filters.small-12.small-centered.columns
 						.row
@@ -110,24 +107,26 @@
 							.small-2.columns
 								%button.reset Reset
 						.row
-							
-							.small-3.columns
+							.small-2.columns.key
 								%p Passed
-								#red.circle
-							.small-3.columns
+								#red
+							.small-2.columns.key
 								%p Failed
-								#blue.circle
-							.small-3.columns
+								#blue
+							.small-2.columns.key
 								%p N/A
-								#gray.circle
-							.small-3.columns
-								#exempt.circle
-								
+								#gray
+							.small-2.columns.end.key
+								%p Exempt
+								#exempt
 					#vis.small-12.columns.end
 				.row
 			%ol.joyride-list{:data => {:joyride => true}}
-				%li{:data_text => "status", :data_options => "prev_button: false"}
-					%p Please select a year before selecting a status option.
+				%li{:data_id => "status", :data_text => "status", :data_options => "prev_button: false"}
+					%p Please select a year before selecting a status.
+			.row 
+				#footer.small-12.columns
+					%p &#169; 2014 Andy Davies. Coded for USF's Information Visualization course on Nov. 9,2014. Energy audit dataset courtesy of <a href="https://data.sfgov.org/">DataSF</a> 
 
 
 		%script{:src => "bower_components/jquery/dist/jquery.min.js"}

@@ -34,7 +34,7 @@ $(document).ready(function(){
 						    .append("div")
 						    .style("background", "white")
 						    .style("position", "absolute")
-						    .style("z-index", "100")
+						    .style("z-index", "1000")
 						    .style("visibility", "hidden")
 						    .style("font-family", "Source Sans Pro")
 						    .style("font-size", "0.75rem")
@@ -77,20 +77,14 @@ $(document).ready(function(){
 						return projection([d.Longitude, d.Latitude])[1];
 					})
 					.attr("fill", "#222222")
-					.attr("stroke", "#CCCCCC")
+					.attr("stroke", "#AAAAAA")
 					.attr("stroke-width", "1px")
 					.on("mouseover", function(d){
 						d3.select(this)
 							.transition()
 							.duration(200)
 							.attr("stroke", "#ffffff")
-							.attr("stroke-width", function(d){
-								if(yearCheck != undefined){
-
-								}else{
-									return "2px";
-								}
-							})
+							.attr("stroke-width", "2px")
 						return tooltip.style("visibility", "visible")
 									   .text(d.BuildingAddress)
 									   .style("top",(d3.event.pageY-40)+"px")
@@ -100,8 +94,14 @@ $(document).ready(function(){
 						d3.select(this)
 							.transition()
 							.duration(200)
-							.attr("stroke", "#ffffff")
-							.attr("stroke-width", "0px")
+							.attr("stroke", "#AAAAAA")
+							.attr("stroke-width", function(d){
+								if(yearCheck == undefined){
+									return "1px"
+								}else{
+									return "0px";
+								}
+							})
 						return tooltip.style("visibility", "hidden");
 					});
 					//Hover changes
@@ -113,6 +113,24 @@ $(document).ready(function(){
 					//Initial View Reset
 					$(".reset").click(function(){
 						$("#year").html("2010");
+						$("#neighborhood").html("All Neighborhoods");
+						yearCheck = "2010"
+						locationCheck = "AllNeighborhoods"
+						statusCheck = undefined;
+						d3.selectAll("circle")
+							.transition()
+							.duration(500)
+							.attr("r", 5)
+							.attr("stroke", "none")
+							.style("fill", function(d){
+								if(d.Status2010 == "Complied"){
+									return "#4FF2FF";
+								}else if (d.Status2010 == "DidNotComply"){
+									return "#FF6074";
+								}else if(d.Status2010 == "NA") {
+									return "#CCCCCC"; 						
+								}
+							})
 					})
 
 					//Year Filter
@@ -170,12 +188,9 @@ $(document).ready(function(){
 										}else{
 											return 0
 										}
-									}else{
-										return 0
 									}
 							}else if(d.Neighborhood == locationCheck){
-								if(statusCheck == undefined){
-									return 5;	
+								if(statusCheck == undefined || statusCheck == "AllResults"){
 									if(yearCheck == "2010"){
 										if(statusCheck == d.Status2010){
 											return 5;
@@ -203,15 +218,12 @@ $(document).ready(function(){
 										}else{
 											return 0
 										}
-									}
 									}else{
-										return 0
+										return 5;	
 									}
-							}else{
-								return 0
 							}
-							console.log(yearCheck)
-						})
+						}
+					})
 						.style("fill", function(d) {
 							if (yearCheck == "2010"){
 								if(d.Status2010 == "Complied"){
@@ -319,14 +331,13 @@ $(document).ready(function(){
 						.transition()
 						.attr("r", function(d){
 							if(statusCheck == "AllResults"){
-								if(d.Neighborhood == locationCheck){
+								if(d.Neighborhood == locationCheck || locationCheck == undefined){
 									return 5;
 									console.log("all")
 								}else{
 									return 0;
 								}
-							}
-							if(d.Neighborhood == locationCheck){
+							}else if(d.Neighborhood == locationCheck){
 								if(yearCheck = "2010"){
 									if(d.Status2010 == statusCheck){
 										return 5;
@@ -446,6 +457,41 @@ $(document).ready(function(){
 								}
 							}else{ 
 								return 0;
+							}
+						})
+						.style("fill", function(d) {
+							if (yearCheck == "2010"){
+								if(d.Status2010 == "Complied"){
+									return "#4FF2FF";
+								}else if (d.Status2010 == "DidNotComply"){
+									return "#FF6074";
+								}else if(d.Status2010 == "NA") {
+									return "#CCCCCC"; 						
+								}
+							}else if(yearCheck == "2011"){
+								if(d.Status2011 == "Complied"){
+									return "#4FF2FF";
+								}else if (d.Status2011 == "DidNotComply"){
+									return "#FF6074";
+								}else if (d.Status2011 == "NA") {
+									return "#CCCCCC"; 						
+								}
+							}else if(yearCheck == "2012"){
+								if(d.Status2012 == "Complied"){
+									return "#4FF2FF";
+								}else if (d.Status2012 == "DidNotComply"){
+									return "#FF6074";
+								} else if(d.Status2012 == "NA") {
+									return "#CCCCCC"; 						
+								}
+							}else if(yearCheck == "2013"){
+								if(d.Status2013 == "Complied"){
+									return "#4FF2FF";
+								}else if (d.Status2013 == "DidNotComply"){
+									return "#FF6074";
+								} else if(d.Status2013 == "NA") {
+									return "#CCCCCC"; 						
+								}
 							}
 						})
 						.duration(1000);
