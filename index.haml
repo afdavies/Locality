@@ -22,7 +22,7 @@
 					#logoContainer.small-1.columns
 						%img#logo{:src => "../Locality/img/Lightbulbcity.svg"}
 					#title.small-11.columns
-						%h1 Electri<span id="city">City</span>&nbsp<span id="desc">A visualization of 1,896 commerical buildings and whether they passed or failed annual San Francisco energy audits from 2010-2013. 
+						%h1 Electri<span id="city">City</span>&nbsp<span id="desc">A visualization of 1,896 commerical buildings and their annual San Francisco energy audit results from 2010-2013. 
 				-# .row
 				-# 	.small-12.small-offset-1.columns.end
 				-# 		%p
@@ -126,8 +126,8 @@
 					#vis.small-12.columns.end
 				.row
 			%ol.joyride-list{:data => {:joyride => true}}
-				%li{:data_button => "Okay"}
-					%p Please select a year before selecting a status option.		
+				%li{:data_text => "status", :data_options => "prev_button: false"}
+					%p Please select a year before selecting a status option.
 
 
 		%script{:src => "bower_components/jquery/dist/jquery.min.js"}

@@ -34,7 +34,7 @@ $(document).ready(function(){
 						    .append("div")
 						    .style("background", "white")
 						    .style("position", "absolute")
-						    .style("z-index", "10")
+						    .style("z-index", "100")
 						    .style("visibility", "hidden")
 						    .style("font-family", "Source Sans Pro")
 						    .style("font-size", "0.75rem")
@@ -84,7 +84,13 @@ $(document).ready(function(){
 							.transition()
 							.duration(200)
 							.attr("stroke", "#ffffff")
-							.attr("stroke-width", "2px")
+							.attr("stroke-width", function(d){
+								if(yearCheck != undefined){
+
+								}else{
+									return "2px";
+								}
+							})
 						return tooltip.style("visibility", "visible")
 									   .text(d.BuildingAddress)
 									   .style("top",(d3.event.pageY-40)+"px")
