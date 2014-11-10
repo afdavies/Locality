@@ -8,18 +8,32 @@ var text;
 var node;
 var height;
 var width;
+var latLong = [122.4167, -37.7833];
+var projection = d3.geo.albers()
+					
+				   // .translate([w*84.58, h*14.49])
+				   // .scale(232000)
+				   .translate([960/2, 550/2])
+				   .scale(5000)
+				   .rotate([122.4167,0])
+				   .center([0, 37.757]);
+				   // .rotate();
+
+
 
 $(document).ready(function(){
 
 			//Width and height
 			var w = 960;
 			var h = 550;
-			var SFLat = 37.7833;
-			var SFLon = -122.4167;
+			// var SFLat = 37.7833;
+			// var SFLon = -122.4167;
 			//Define map projection
-			var projection = d3.geo.albersUsa()
-								   .translate([w*84.58, h*14.49])
-								   .scale(232000);
+			// var projection = d3.geo.albers()
+									
+			// 					   // .translate([w*84.58, h*14.49])
+			// 					   // .scale(232000)
+			// 					   .center([0,0]);
 
 			//Define path 
 			var path = d3.geo.path()
@@ -29,12 +43,12 @@ $(document).ready(function(){
 						.append("svg")
 						.attr("width", w)
 						.attr("height", h);
-			//Create tooltip
-			var tooltip = d3.select("body")
+			// Create tooltip
+			var tooltip = d3.select("#vis")
 						    .append("div")
 						    .style("background", "white")
 						    .style("position", "absolute")
-						    .style("z-index", "1000")
+						    .style("z-index", "10")
 						    .style("visibility", "hidden")
 						    .style("font-family", "Source Sans Pro")
 						    .style("font-size", "0.75rem")
@@ -86,9 +100,11 @@ $(document).ready(function(){
 							.attr("stroke", "#ffffff")
 							.attr("stroke-width", "2px")
 						return tooltip.style("visibility", "visible")
-									   .text(d.BuildingAddress)
-									   .style("top",(d3.event.pageY-40)+"px")
-									   .style("left",(d3.event.pageX-50)+"px");
+									   // .text(d.BuildingAddress)
+									   .style("top",(d3.event.pageY-245)+"px")
+									   .style("left",(d3.event.pageX-190)+"px")
+
+
 					})
 					.on("mouseout", function(){
 						d3.select(this)
@@ -102,7 +118,7 @@ $(document).ready(function(){
 									return "0px";
 								}
 							})
-						return tooltip.style("visibility", "hidden");
+						// return tooltip.style("visibility", "hidden");
 					});
 					//Hover changes
 					//Declare variables
