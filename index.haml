@@ -12,103 +12,103 @@
 		%script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"}
 		%script{:src => "http://d3js.org/d3.v3.min.js"}
 		%script{:src => "http://d3js.org/topojson.v1.min.js"}
-		%script{:src => "js/localVis.js"}
+		%script{:src => "js/geojson.js"}	
+		%script{:src => "js/localVis.js"}	
 		%body
-			#loader
+			.loader
 				%h1 LOADING
 			#wrapper
 				.row
 					#logoContainer.small-1.columns
-						%img#logo{:src => "../img/Lightbulbcity.svg"}
+						%img#logo{:src => "../Locality/img/Lightbulbcity.svg"}
 					#title.small-11.columns
-						%h1 Electri<span>City</span>
+						%h1 Electri<span id="city">City</span>&nbsp<span id="desc">A visualization of 1,896 commerical buildings and whether they passed or failed annual San Francisco energy audits from 2010-2013. 
 				-# .row
-				-# 	.small-10.small-offset-1.columns.end
-				-# 		%p#desc A visualization of 1,896 commerical buildings and whether they passed or failed annual San Francisco energy audits from 2010-2013. 
+				-# 	.small-12.small-offset-1.columns.end
+				-# 		%p
 				.row
-					#filters.small-3.columns
+					#filters.small-12.small-centered.columns
 						.row
-							.small-12.columns
-								%button{:href => "#", :data => {:dropdown => "drop1"}, :aria => { :expanded => "false"}}Year
-								%ul#drop1.f-dropdown{:data => {:dropdown_content => true}, :aria_hidden => "true"}
-									%li
-										%a.2010{:href => "#"} 2010
-									%li
-										%a.2011{:href => "#"} 2011
-									%li
-										%a.2012{:href => "#"} 2012
-									%li
-										%a.2013{:href => "#"} 2013
-						.row
-							.small-12.columns
-								%button{:href => "#", :data => {:dropdown => "drop2"}, :aria => { :expanded => "false"}}Neighborhood
-								%ul#drop2.f-dropdown{:data => {:dropdown_content => true}, :aria_hidden => "true"}
-									%li 
-										%a.AllNeighborhoods{:href => "#"} All Neighborhoods
-									%li
-										%a.Fidi{:href => "#"} Financial District
-									%li
-										%a.Dwntwn{:href => "#"} Downtown/Civic Center
-									%li
-										%a.SOMA{:href => "#"} SOMA
-									%li
-										%a.outersoma{:href => "#"} Outer SOMA
-									%li
-										%a.Mission{:href => "#"} Mission
-									%li
-										%a.OuterMission{:href => "#"} Outer Mission
-									%li
-										%a.PotreroHill{:href => "#"} Potrero Hill
-									%li
-										%a.Bayview{:href => "#"} Bayview
-									%li
-										%a.Marina{:href => "#"} Marina
-									%li
-										%a.NorthBeach{:href => "#"} North Beach
-									%li
-										%a.NobHill{:href => "#"} Nob Hill
-									%li
-										%a.Chinatown{:href => "#"} Chinatown
-									%li
-										%a.WesternAddition{:href => "#"} Western Addition
-									%li
-										%a.InnerRichmond{:href => "#"} Inner Richmond
-									%li
-										%a.OuterRichmond{:href => "#"} Outer Richmond
-									%li
-										%a.Seacliff{:href => "#"} Seacliff
-									%li
-										%a.PresidioHeights{:href => "#"} Presidio Heights
-									%li
-										%a.HaightAshbury{:href => "#"} Haight Ashbury
-									%li
-										%a.InnerSunset{:href => "#"} Inner Sunset
-									%li
-										%a.OuterSunset{:href => "#"} Outer Sunset
-									%li
-										%a.BernalHeights{:href => "#"} Bernal Heights
-									%li
-										%a.OceanView{:href => "#"} Ocean View
-									%li
-										%a.CrockerAmazon{:href => "#"} Crocker Amazon
-									%li
-										%a.DiamondHeights{:href => "#"} Diamond Heights
-									%li
-										%a.Parkside{:href => "#"} Parkside
-
-
-						.row
-							.small-12.columns
-								%button.noselect{:href => "#", :data => {:dropdown => "drop3"}, :aria => { :expanded => "false"}}Status
-								%ul#drop3.f-dropdown{:data => {:dropdown_content => true}, :aria_hidden => "true"}
-									%li
-										%a#AllResults.AllResults{:href => "#"} All Results
-									%li
-										%a#Complied.Complied{:href => "#"} Passed
-									%li
-										%a#DidNotComply.DidNotComply{:href => "#"} Failed
-									%li
-										%a#NA.NA{:href => "#"} N/A
+							.small-10.columns
+								.small-4.columns
+									%button#year{:href => "#", :data => {:dropdown => "drop1"}, :aria => { :expanded => "false"}}Year
+									%ul#drop1.f-dropdown{:data => {:dropdown_content => true}, :aria_hidden => "true"}
+										%li
+											%a.2010{:href => "#"} 2010
+										%li
+											%a.2011{:href => "#"} 2011
+										%li
+											%a.2012{:href => "#"} 2012
+										%li
+											%a.2013{:href => "#"} 2013
+								.small-4.columns
+									%button#neighborhood{:href => "#", :data => {:dropdown => "drop2"}, :aria => { :expanded => "false"}}Neighborhood
+									%ul#drop2.f-dropdown{:data => {:dropdown_content => true}, :aria_hidden => "true"}
+										%li 
+											%a.AllNeighborhoods{:href => "#"} All Neighborhoods
+										%li
+											%a.Fidi{:href => "#"} Financial District
+										%li
+											%a.Dwntwn{:href => "#"} Downtown/Civic Center
+										%li
+											%a.SOMA{:href => "#"} SOMA
+										%li
+											%a.outersoma{:href => "#"} Outer SOMA
+										%li
+											%a.Mission{:href => "#"} Mission
+										%li
+											%a.OuterMission{:href => "#"} Outer Mission
+										%li
+											%a.PotreroHill{:href => "#"} Potrero Hill
+										%li
+											%a.Bayview{:href => "#"} Bayview
+										%li
+											%a.Marina{:href => "#"} Marina
+										%li
+											%a.NorthBeach{:href => "#"} North Beach
+										%li
+											%a.NobHill{:href => "#"} Nob Hill
+										%li
+											%a.Chinatown{:href => "#"} Chinatown
+										%li
+											%a.WesternAddition{:href => "#"} Western Addition
+										%li
+											%a.InnerRichmond{:href => "#"} Inner Richmond
+										%li
+											%a.OuterRichmond{:href => "#"} Outer Richmond
+										%li
+											%a.Seacliff{:href => "#"} Seacliff
+										%li
+											%a.PresidioHeights{:href => "#"} Presidio Heights
+										%li
+											%a.HaightAshbury{:href => "#"} Haight Ashbury
+										%li
+											%a.InnerSunset{:href => "#"} Inner Sunset
+										%li
+											%a.OuterSunset{:href => "#"} Outer Sunset
+										%li
+											%a.BernalHeights{:href => "#"} Bernal Heights
+										%li
+											%a.OceanView{:href => "#"} Ocean View
+										%li
+											%a.CrockerAmazon{:href => "#"} Crocker Amazon
+										%li
+											%a.DiamondHeights{:href => "#"} Diamond Heights
+										%li
+											%a.Parkside{:href => "#"} Parkside
+								.small-4.columns
+									%button#status.noselect{:href => "#", :data => {:dropdown => "drop3"}, :aria => { :expanded => "false"}}Status
+									%ul#drop3.f-dropdown{:data => {:dropdown_content => true}, :aria_hidden => "true"}
+										%li
+											%a#AllResults.AllResults{:href => "#"} All Results
+										%li
+											%a#Complied.Complied{:href => "#"} Passed
+										%li
+											%a#DidNotComply.DidNotComply{:href => "#"} Failed
+										%li
+											%a#NA.NA{:href => "#"} N/A
+							.small-2.columns
+								%button.reset Reset
 						.row
 							
 							.small-3.columns
@@ -123,10 +123,15 @@
 							.small-3.columns
 								#exempt.circle
 								
-					#vis.small-9.columns.end
+					#vis.small-12.columns.end
 				.row
+			%ol.joyride-list{:data => {:joyride => true}}
+				%li{:data_button => "Okay"}
+					%p Please select a year before selecting a status option.		
 
 
 		%script{:src => "bower_components/jquery/dist/jquery.min.js"}
 		%script{:src => "bower_components/foundation/js/foundation.min.js"}
 		%script{:src => "js/app.js"}
+		%script
+			$(document).foundation().foundation('joyride', 'start');

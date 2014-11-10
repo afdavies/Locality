@@ -29,9 +29,21 @@ $(document).ready(function(){
 						.append("svg")
 						.attr("width", w)
 						.attr("height", h);
-			
+			//Create tooltip
+			var tooltip = d3.select("body")
+						    .append("div")
+						    .style("background", "white")
+						    .style("position", "absolute")
+						    .style("z-index", "10")
+						    .style("visibility", "hidden")
+						    .style("font-family", "Source Sans Pro")
+						    .style("font-size", "0.75rem")
+						    .style("padding-left", "3px")
+						    .style("padding-right", "3px")
+						    .text("a simple tooltip");
+
 			//Load in GeoJSON data
-			d3.json('json/SFEU.geojson', function(json) {
+			d3.json('./json/SFEU.geojson', function(json) {
 				console.log(json)
 			//Bind data and create one path per GeoJSON feature
 				svg.selectAll("path")
@@ -41,7 +53,7 @@ $(document).ready(function(){
 				   .attr("d", path)
 				   .attr("fill", "#FFFFFF")
 				   .attr("stroke", "#74E896")
-				   .attr("stroke-width", "2px");
+				   .attr("stroke-width", "1px");
 				   console.log(path);
 
 				 
@@ -49,11 +61,6 @@ $(document).ready(function(){
 			 //load in CSV, create groups and building circles
 			d3.csv('csv/CommercialBuildingEnergy3.csv', function(data){
 					console.log(data);
-					div = d3.select("body")
-							.append("div")
-							.attr("class", "tooltip")
-							.style("opacity", 0);
-
 					g = svg.selectAll("g")
 							.data(data)
 							.enter()
@@ -72,43 +79,37 @@ $(document).ready(function(){
 					.attr("fill", "#222222")
 					.attr("stroke", "#CCCCCC")
 					.attr("stroke-width", "1px")
-					
-					//Hover changes
-
-					.on("mouseenter", function(){
+					.on("mouseover", function(d){
 						d3.select(this)
-								.style("z-index", 1001)
-								// .attr("stroke-width", "4px")
-						d3.select(this.parentNode)
-							.append('text')
-							.attr("x", function(d){
-								return projection([d.Longitude, d.Latitude])[0]
-							})
-							.attr("y", function(d){
-								return projection([d.Longitude, d.Latitude])[1]
-							})
-							.text(function(d){
-								return d.BuildingAddress
-							})
-							.attr("fill", "#222222")
-							.attr("font-family", "Montserrat")
-							.style("text-transform", "uppercase")
-							.attr("z-index", 10001)
+							.transition()
+							.duration(200)
+							.attr("stroke", "#ffffff")
+							.attr("stroke-width", "2px")
+						return tooltip.style("visibility", "visible")
+									   .text(d.BuildingAddress)
+									   .style("top",(d3.event.pageY-40)+"px")
+									   .style("left",(d3.event.pageX-50)+"px");
 					})
-					.on("mouseleave", function(){
+					.on("mouseout", function(){
 						d3.select(this)
-								.attr("fill", "white")
-								// .attr("stroke-width", "2px")
-
-						d3.select(this.parentNode).selectAll("text")
-							.remove();
+							.transition()
+							.duration(200)
+							.attr("stroke", "#ffffff")
+							.attr("stroke-width", "0px")
+						return tooltip.style("visibility", "hidden");
 					});
-
-					//Year Filter
+					//Hover changes
+					//Declare variables
 					var locationCheck;
 					var statusCheck;
 					var yearCheck;
+					
+					//Initial View Reset
+					$(".reset").click(function(){
+						$("#year").html("2010");
+					})
 
+					//Year Filter
 					$("#drop1>li>a").click(function(d){
 						event.preventDefault();
 						var checkClass = $(this).parent().siblings().children("a").hasClass("selected");
@@ -133,7 +134,6 @@ $(document).ready(function(){
 						.transition()
 						.attr("stroke-width", "0px")
 						.attr("r", function(d){
-
 							if(locationCheck == undefined){
 								return 5;
 							}else if(locationCheck == "AllNeighborhoods"){
@@ -204,25 +204,26 @@ $(document).ready(function(){
 							}else{
 								return 0
 							}
+							console.log(yearCheck)
 						})
 						.style("fill", function(d) {
-							if (yearCheck = "2010"){
+							if (yearCheck == "2010"){
 								if(d.Status2010 == "Complied"){
 									return "#4FF2FF";
 								}else if (d.Status2010 == "DidNotComply"){
 									return "#FF6074";
-								} else if(d.Status2010 == "NA") {
+								}else if(d.Status2010 == "NA") {
 									return "#CCCCCC"; 						
 								}
-							}else if(yearCheck = "2011"){
+							}else if(yearCheck == "2011"){
 								if(d.Status2011 == "Complied"){
 									return "#4FF2FF";
 								}else if (d.Status2011 == "DidNotComply"){
 									return "#FF6074";
-								} else if(d.Status2011 == "NA") {
+								}else if (d.Status2011 == "NA") {
 									return "#CCCCCC"; 						
 								}
-							}else if(yearCheck = "2012"){
+							}else if(yearCheck == "2012"){
 								if(d.Status2012 == "Complied"){
 									return "#4FF2FF";
 								}else if (d.Status2012 == "DidNotComply"){
@@ -230,7 +231,7 @@ $(document).ready(function(){
 								} else if(d.Status2012 == "NA") {
 									return "#CCCCCC"; 						
 								}
-							}else if(yearCheck = "2013"){
+							}else if(yearCheck == "2013"){
 								if(d.Status2013 == "Complied"){
 									return "#4FF2FF";
 								}else if (d.Status2013 == "DidNotComply"){
@@ -286,43 +287,6 @@ $(document).ready(function(){
 								}
 							}else{
 								return 0; 
-							}
-						})
-						.style("fill", function(d) {
-							if(yearCheck != undefined){
-								if (yearCheck = "2010"){
-									if(d.Status2010 == "Complied"){
-										return "#4FF2FF";
-									}else if (d.Status2010 == "DidNotComply"){
-										return "#FF6074";
-									} else if(d.Status2010 == "NA") {
-										return "#CCCCCC"; 						
-									}
-								}else if (yearCheck = "2011"){
-									if(d.Status2011 == "Complied"){
-										return "#4FF2FF";
-									}else if (d.Status2011 == "DidNotComply"){
-										return "#FF6074";
-									} else if(d.Status2011 == "NA") {
-										return "#CCCCCC"; 						
-									}
-								}else if (yearCheck = "2012"){
-									if(d.Status2012 == "Complied"){
-										return "#4FF2FF";
-									}else if (d.Status2012 == "DidNotComply"){
-										return "#FF6074";
-									} else if(d.Status2012 == "NA") {
-										return "#CCCCCC"; 						
-									}
-								}else if (yearCheck = "2013"){
-									if(d.Status2013 == "Complied"){
-										return "#4FF2FF";
-									}else if (d.Status2013 == "DidNotComply"){
-										return "#FF6074";
-									} else if(d.Status2013 == "NA") {
-										return "#CCCCCC"; 						
-									}
-								}
 							}
 						})
 						.duration(1000);
@@ -479,9 +443,13 @@ $(document).ready(function(){
 							}
 						})
 						.duration(1000);
-
 					})
 			}); 
 		});
-		$("#loader").addClass("loaded");
+	setTimeout(function(){
+		$(".loader").addClass("loaded")
+		setTimeout(function(){
+			$(".loader").addClass("fade")
+		}, 1750)
+	}, 1000);
 });

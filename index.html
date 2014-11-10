@@ -12,143 +12,145 @@
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
     <script src='http://d3js.org/d3.v3.min.js'></script>
     <script src='http://d3js.org/topojson.v1.min.js'></script>
+    <script src='js/geojson.js'></script>
     <script src='js/localVis.js'></script>
     <body>
-      <div id='loader'>
+      <div class='loader'>
         <h1>LOADING</h1>
       </div>
       <div id='wrapper'>
         <div class='row'>
           <div class='small-1 columns' id='logoContainer'>
-            <img id='logo' src='../img/Lightbulbcity.svg'>
+            <img id='logo' src='../Locality/img/Lightbulbcity.svg'>
           </div>
           <div class='small-11 columns' id='title'>
-            <h1>Electri<span>City</span></h1>
+            <h1>Electri<span id="city">City</span>&nbsp<span id="desc">A visualization of 1,896 commerical buildings and whether they passed or failed annual San Francisco energy audits from 2010-2013.</h1>
           </div>
         </div>
         <div class='row'>
-          <div class='small-3 columns' id='filters'>
+          <div class='small-12 small-centered columns' id='filters'>
             <div class='row'>
-              <div class='small-12 columns'>
-                <button aria-expanded='false' data-dropdown='drop1' href='#'>Year</button>
-                <ul aria_hidden='true' class='f-dropdown' data-dropdown-content id='drop1'>
-                  <li>
-                    <a class='2010' href='#'>2010</a>
-                  </li>
-                  <li>
-                    <a class='2011' href='#'>2011</a>
-                  </li>
-                  <li>
-                    <a class='2012' href='#'>2012</a>
-                  </li>
-                  <li>
-                    <a class='2013' href='#'>2013</a>
-                  </li>
-                </ul>
+              <div class='small-10 columns'>
+                <div class='small-4 columns'>
+                  <button aria-expanded='false' data-dropdown='drop1' href='#' id='year'>Year</button>
+                  <ul aria_hidden='true' class='f-dropdown' data-dropdown-content id='drop1'>
+                    <li>
+                      <a class='2010' href='#'>2010</a>
+                    </li>
+                    <li>
+                      <a class='2011' href='#'>2011</a>
+                    </li>
+                    <li>
+                      <a class='2012' href='#'>2012</a>
+                    </li>
+                    <li>
+                      <a class='2013' href='#'>2013</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class='small-4 columns'>
+                  <button aria-expanded='false' data-dropdown='drop2' href='#' id='neighborhood'>Neighborhood</button>
+                  <ul aria_hidden='true' class='f-dropdown' data-dropdown-content id='drop2'>
+                    <li>
+                      <a class='AllNeighborhoods' href='#'>All Neighborhoods</a>
+                    </li>
+                    <li>
+                      <a class='Fidi' href='#'>Financial District</a>
+                    </li>
+                    <li>
+                      <a class='Dwntwn' href='#'>Downtown/Civic Center</a>
+                    </li>
+                    <li>
+                      <a class='SOMA' href='#'>SOMA</a>
+                    </li>
+                    <li>
+                      <a class='outersoma' href='#'>Outer SOMA</a>
+                    </li>
+                    <li>
+                      <a class='Mission' href='#'>Mission</a>
+                    </li>
+                    <li>
+                      <a class='OuterMission' href='#'>Outer Mission</a>
+                    </li>
+                    <li>
+                      <a class='PotreroHill' href='#'>Potrero Hill</a>
+                    </li>
+                    <li>
+                      <a class='Bayview' href='#'>Bayview</a>
+                    </li>
+                    <li>
+                      <a class='Marina' href='#'>Marina</a>
+                    </li>
+                    <li>
+                      <a class='NorthBeach' href='#'>North Beach</a>
+                    </li>
+                    <li>
+                      <a class='NobHill' href='#'>Nob Hill</a>
+                    </li>
+                    <li>
+                      <a class='Chinatown' href='#'>Chinatown</a>
+                    </li>
+                    <li>
+                      <a class='WesternAddition' href='#'>Western Addition</a>
+                    </li>
+                    <li>
+                      <a class='InnerRichmond' href='#'>Inner Richmond</a>
+                    </li>
+                    <li>
+                      <a class='OuterRichmond' href='#'>Outer Richmond</a>
+                    </li>
+                    <li>
+                      <a class='Seacliff' href='#'>Seacliff</a>
+                    </li>
+                    <li>
+                      <a class='PresidioHeights' href='#'>Presidio Heights</a>
+                    </li>
+                    <li>
+                      <a class='HaightAshbury' href='#'>Haight Ashbury</a>
+                    </li>
+                    <li>
+                      <a class='InnerSunset' href='#'>Inner Sunset</a>
+                    </li>
+                    <li>
+                      <a class='OuterSunset' href='#'>Outer Sunset</a>
+                    </li>
+                    <li>
+                      <a class='BernalHeights' href='#'>Bernal Heights</a>
+                    </li>
+                    <li>
+                      <a class='OceanView' href='#'>Ocean View</a>
+                    </li>
+                    <li>
+                      <a class='CrockerAmazon' href='#'>Crocker Amazon</a>
+                    </li>
+                    <li>
+                      <a class='DiamondHeights' href='#'>Diamond Heights</a>
+                    </li>
+                    <li>
+                      <a class='Parkside' href='#'>Parkside</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class='small-4 columns'>
+                  <button aria-expanded='false' class='noselect' data-dropdown='drop3' href='#' id='status'>Status</button>
+                  <ul aria_hidden='true' class='f-dropdown' data-dropdown-content id='drop3'>
+                    <li>
+                      <a class='AllResults' href='#' id='AllResults'>All Results</a>
+                    </li>
+                    <li>
+                      <a class='Complied' href='#' id='Complied'>Passed</a>
+                    </li>
+                    <li>
+                      <a class='DidNotComply' href='#' id='DidNotComply'>Failed</a>
+                    </li>
+                    <li>
+                      <a class='NA' href='#' id='NA'>N/A</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-            <div class='row'>
-              <div class='small-12 columns'>
-                <button aria-expanded='false' data-dropdown='drop2' href='#'>Neighborhood</button>
-                <ul aria_hidden='true' class='f-dropdown' data-dropdown-content id='drop2'>
-                  <li>
-                    <a class='AllNeighborhoods' href='#'>All Neighborhoods</a>
-                  </li>
-                  <li>
-                    <a class='Fidi' href='#'>Financial District</a>
-                  </li>
-                  <li>
-                    <a class='Dwntwn' href='#'>Downtown/Civic Center</a>
-                  </li>
-                  <li>
-                    <a class='SOMA' href='#'>SOMA</a>
-                  </li>
-                  <li>
-                    <a class='outersoma' href='#'>Outer SOMA</a>
-                  </li>
-                  <li>
-                    <a class='Mission' href='#'>Mission</a>
-                  </li>
-                  <li>
-                    <a class='OuterMission' href='#'>Outer Mission</a>
-                  </li>
-                  <li>
-                    <a class='PotreroHill' href='#'>Potrero Hill</a>
-                  </li>
-                  <li>
-                    <a class='Bayview' href='#'>Bayview</a>
-                  </li>
-                  <li>
-                    <a class='Marina' href='#'>Marina</a>
-                  </li>
-                  <li>
-                    <a class='NorthBeach' href='#'>North Beach</a>
-                  </li>
-                  <li>
-                    <a class='NobHill' href='#'>Nob Hill</a>
-                  </li>
-                  <li>
-                    <a class='Chinatown' href='#'>Chinatown</a>
-                  </li>
-                  <li>
-                    <a class='WesternAddition' href='#'>Western Addition</a>
-                  </li>
-                  <li>
-                    <a class='InnerRichmond' href='#'>Inner Richmond</a>
-                  </li>
-                  <li>
-                    <a class='OuterRichmond' href='#'>Outer Richmond</a>
-                  </li>
-                  <li>
-                    <a class='Seacliff' href='#'>Seacliff</a>
-                  </li>
-                  <li>
-                    <a class='PresidioHeights' href='#'>Presidio Heights</a>
-                  </li>
-                  <li>
-                    <a class='HaightAshbury' href='#'>Haight Ashbury</a>
-                  </li>
-                  <li>
-                    <a class='InnerSunset' href='#'>Inner Sunset</a>
-                  </li>
-                  <li>
-                    <a class='OuterSunset' href='#'>Outer Sunset</a>
-                  </li>
-                  <li>
-                    <a class='BernalHeights' href='#'>Bernal Heights</a>
-                  </li>
-                  <li>
-                    <a class='OceanView' href='#'>Ocean View</a>
-                  </li>
-                  <li>
-                    <a class='CrockerAmazon' href='#'>Crocker Amazon</a>
-                  </li>
-                  <li>
-                    <a class='DiamondHeights' href='#'>Diamond Heights</a>
-                  </li>
-                  <li>
-                    <a class='Parkside' href='#'>Parkside</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class='row'>
-              <div class='small-12 columns'>
-                <button aria-expanded='false' class='noselect' data-dropdown='drop3' href='#'>Status</button>
-                <ul aria_hidden='true' class='f-dropdown' data-dropdown-content id='drop3'>
-                  <li>
-                    <a class='AllResults' href='#' id='AllResults'>All Results</a>
-                  </li>
-                  <li>
-                    <a class='Complied' href='#' id='Complied'>Passed</a>
-                  </li>
-                  <li>
-                    <a class='DidNotComply' href='#' id='DidNotComply'>Failed</a>
-                  </li>
-                  <li>
-                    <a class='NA' href='#' id='NA'>N/A</a>
-                  </li>
-                </ul>
+              <div class='small-2 columns'>
+                <button class='reset'>Reset</button>
               </div>
             </div>
             <div class='row'>
@@ -169,13 +171,21 @@
               </div>
             </div>
           </div>
-          <div class='small-9 columns end' id='vis'></div>
+          <div class='small-12 columns end' id='vis'></div>
         </div>
         <div class='row'></div>
       </div>
+      <ol class='joyride-list' data-joyride>
+        <li data_button='Okay'>
+          <p>Please select a year before selecting a status option.</p>
+        </li>
+      </ol>
     </body>
     <script src='bower_components/jquery/dist/jquery.min.js'></script>
     <script src='bower_components/foundation/js/foundation.min.js'></script>
     <script src='js/app.js'></script>
+    <script>
+      $(document).foundation().foundation('joyride', 'start');
+    </script>
   </head>
 </html>
