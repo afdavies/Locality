@@ -14,7 +14,7 @@ var projection = d3.geo.albers()
 				   // .translate([w*84.58, h*14.49])
 				   // .scale(232000)
 				   .translate([960/2, 550/2])
-				   .scale(5000)
+				   .scale(232000)
 				   .rotate([122.4167,0])
 				   .center([0, 37.757]);
 				   // .rotate();
@@ -100,7 +100,7 @@ $(document).ready(function(){
 							.attr("stroke", "#ffffff")
 							.attr("stroke-width", "2px")
 						return tooltip.style("visibility", "visible")
-									   // .text(d.BuildingAddress)
+									   .text(d.Buildingaddress)
 									   .style("top",(d3.event.pageY-245)+"px")
 									   .style("left",(d3.event.pageX-190)+"px")
 
@@ -118,7 +118,7 @@ $(document).ready(function(){
 									return "0px";
 								}
 							})
-						// return tooltip.style("visibility", "hidden");
+						return tooltip.style("visibility", "hidden");
 					});
 					//Hover changes
 					//Declare variables
@@ -183,22 +183,19 @@ $(document).ready(function(){
 										}else{
 											return 0;
 										}
-									}
-									if(yearCheck == "2011"){
+									}else if(yearCheck == "2011"){
 										if(statusCheck == d.Status2011){
 											return 5
 										}else{
 											return 0
 										}
-									}
-									if(yearCheck == "2012"){
+									}else if(yearCheck == "2012"){
 										if(statusCheck == d.Status2012){
 											return 5
 										}else{
 											return 0
 										}
-									}
-									if(yearCheck == "2013"){
+									}else if(yearCheck == "2013"){
 										if(statusCheck == d.Status2013){
 											return 5
 										}else{
@@ -302,8 +299,6 @@ $(document).ready(function(){
 									return 5;
 								}else if(locationCheck == undefined || locationCheck == "AllNeighborhoods"){
 									return 5;
-								}else{
-									return 0;
 								}
 							}else if(d.Neighborhood == locationCheck){
 								if(statusCheck == undefined){
@@ -360,19 +355,19 @@ $(document).ready(function(){
 									}else{
 										return 0;
 									}
-								}else if(yearCheck = "2011"){
+								}else if(yearCheck == "2011"){
 									if(d.Status2011 == statusCheck){
 										return 5;
 									}else{
 										return 0;
 									}
-								}else if(yearCheck = "2012"){
+								}else if(yearCheck == "2012"){
 									if(d.Status2012 == statusCheck){
 										return 5;
 									}else{
 										return 0;
 									}
-								}else if(yearCheck = "2013"){
+								}else if(yearCheck == "2013"){
 									if(d.Status2013 == statusCheck){
 										return 5;
 									}else{
