@@ -9,42 +9,31 @@ var node;
 var height;
 var width;
 var latLong = [122.4167, -37.7833];
-var projection = d3.geo.albers()
-					
-				   // .translate([w*84.58, h*14.49])
-				   // .scale(232000)
-				   .translate([960/2, 550/2])
-				   .scale(232000)
-				   .rotate([122.4167,0])
-				   .center([0, 37.757]);
-				   // .rotate();
-
-
+var projection; 
+var path;
+var tooltip;
 
 $(document).ready(function(){
-
 			//Width and height
-			var w = 960;
+			var w = 1000;
 			var h = 550;
-			// var SFLat = 37.7833;
-			// var SFLon = -122.4167;
-			//Define map projection
-			// var projection = d3.geo.albers()
-									
-			// 					   // .translate([w*84.58, h*14.49])
-			// 					   // .scale(232000)
-			// 					   .center([0,0]);
+
+			projection = d3.geo.albers()
+						   .translate([960/2+75, 550/2+50])
+						   .scale(240000)
+						   .rotate([122.4167,0])
+						   .center([0, 37.757]);
 
 			//Define path 
-			var path = d3.geo.path()
-							 .projection(projection);
+			path = d3.geo.path()
+					.projection(projection);
 			//Create SVG element
-			var svg = d3.select("#vis")
+			svg = d3.select("#vis")
 						.append("svg")
 						.attr("width", w)
 						.attr("height", h);
 			// Create tooltip
-			var tooltip = d3.select("#vis")
+			tooltip = d3.select("#vis")
 						    .append("div")
 						    .style("background", "white")
 						    .style("position", "absolute")
@@ -74,7 +63,6 @@ $(document).ready(function(){
 
 			 //load in CSV, create groups and building circles
 			d3.csv('csv/CommercialBuildingEnergy3.csv', function(data){
-					console.log(data);
 					g = svg.selectAll("g")
 							.data(data)
 							.enter()
@@ -100,11 +88,9 @@ $(document).ready(function(){
 							.attr("stroke", "#ffffff")
 							.attr("stroke-width", "2px")
 						return tooltip.style("visibility", "visible")
-									   .text(d.Buildingaddress)
+									   .text(d.BuildingAddress)
 									   .style("top",(d3.event.pageY-245)+"px")
-									   .style("left",(d3.event.pageX-190)+"px")
-
-
+									   .style("left",(d3.event.pageX-250)+"px")
 					})
 					.on("mouseout", function(){
 						d3.select(this)
@@ -119,7 +105,7 @@ $(document).ready(function(){
 								}
 							})
 						return tooltip.style("visibility", "hidden");
-					});
+					})
 					//Hover changes
 					//Declare variables
 					var locationCheck;
@@ -133,10 +119,25 @@ $(document).ready(function(){
 						yearCheck = "2010"
 						locationCheck = "AllNeighborhoods"
 						statusCheck = undefined;
+						//Reset scale and rotation on whole city
+						projection.translate([960/2+75, 550/2+50])
+						   .scale(240000)
+						   .rotate([122.4167,0])
+						   .center([0, 37.757]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
 						d3.selectAll("circle")
 							.transition()
-							.duration(500)
+							.duration(1000)
 							.attr("r", 5)
+							 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+							})
+							.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+							})
 							.attr("stroke", "none")
 							.style("fill", function(d){
 								if(d.Status2010 == "Complied"){
@@ -151,7 +152,8 @@ $(document).ready(function(){
 
 					//Year Filter
 					$("#drop1>li>a").click(function(d){
-						event.preventDefault();
+						//Scale map
+						 // All the other stuff
 						var checkClass = $(this).parent().siblings().children("a").hasClass("selected");
 						var $siblings = $(this).parent().siblings().children("a");
 						var myClass = $(this).attr("class");
@@ -172,6 +174,7 @@ $(document).ready(function(){
 						console.log(yearCheck)
 						d3.selectAll("circle")
 						.transition()
+						.duration(1000)
 						.attr("stroke-width", "0px")
 						.attr("r", function(d){
 							if(locationCheck == undefined){
@@ -272,12 +275,10 @@ $(document).ready(function(){
 								}
 							}
 						})
-						.duration(1000);
 					})
 					
 					//Neighborhood Filter
-					$("#drop2>li>a").click(function(d){
-						event.preventDefault();
+					$("#drop2>li>a").on("mouseenter", function(d){
 						var myClass = $(this).attr("class");
 						locationCheck = myClass;
 						var buttonText = $(this).text();
@@ -293,6 +294,7 @@ $(document).ready(function(){
 						}
 						d3.selectAll("circle")
 						.transition()
+						.duration(1000)
 						.attr("r", function(d) {
 							if(yearCheck == undefined){
 								if(d.Neighborhood == locationCheck){
@@ -318,7 +320,6 @@ $(document).ready(function(){
 								return 0; 
 							}
 						})
-						.duration(1000);
 					})
 
 					//Status Filter
@@ -516,3 +517,533 @@ $(document).ready(function(){
 		}, 1750)
 	}, 1000);
 });
+
+//map zooming - needs to be called AFTER document.ready()
+
+$(window).load(function(){
+
+	//function for each neighborhood
+	function AllNeighborhoods(){
+		event.preventDefault();
+		projection.scale(250000)
+					.rotate([122.4167,0])
+					.center([0, 37.757]);
+					d3.selectAll("path")
+					 .transition()
+					 .duration(1000)
+					 .attr("d", path);
+					 d3.selectAll("circle")
+					 .transition()
+					 .duration(1000)
+					 .attr("cx", function(d){
+						return projection([d.Longitude, d.Latitude])[0];
+					})
+					.attr("cy", function(d){
+						return projection([d.Longitude, d.Latitude])[1];
+					});
+				}
+	function Fidi(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4008052,0])
+						.center([0, 37.79013461]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function Dwntwn(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4124281, 0])
+ 						.center([0, 37.78137991]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function Soma(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4077413, 0])
+ 						.center([0, 37.77382315]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function WesternSoma(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4115686, 0])
+ 						.center([0, 37.77338002]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function Mission(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.408263, 0])
+ 						.center([0, 37.75883878]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function OuterMission(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4520815, 0])
+ 						.center([0, 37.71664152]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function ProtreroHill(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.3883518, 0])
+ 						.center([0, 37.75374946]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function Bayview(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.3869746, 0])
+ 						.center([0, 37.7435904]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function Marina(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4293375, 0])
+ 						.center([0, 37.80091616]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function NorthBeach(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4021995, 0])
+ 						.center([0, 37.80011861]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function NobHill(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4175449, 0])
+ 						.center([0, 37.78935135]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function Chinatown(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4063268, 0])
+ 						.center([0, 37.79559382]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+
+	function WesternAddition(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4218217, 0])
+ 						.center([0, 37.77791358]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function InnerRichmond(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4725904, 0])
+ 						.center([0, 37.78114476]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	function OuterRichmond(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4942851, 0])
+ 						.center([0, 37.77564424]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+		function Seacliff(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4929523, 0])
+ 						.center([0, 37.78205312]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+		function PresidioHeights(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4482935, 0])
+ 						.center([0, 37.78260961]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+		function HaightAshbury(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4380397, 0])
+ 						.center([0, 37.773344]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+		function InnerSunset(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4711688, 0])
+ 						.center([0, 37.7591531]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+		function OuterSunset(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.48649, 0])
+ 						.center([0, 37.75903]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+		function BernalHeights(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4087299, 0])
+ 						.center([0, 37.74018474]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+		function OceanView(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4702383, 0])
+ 						.center([0, 37.71515607]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+
+		function CrockerAmazon(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4509014, 0])
+ 						.center([0, 37.7091222]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+		function DiamondHeights(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4391709, 0])
+ 						.center([0, 37.74374505]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+		function Parkside(){
+			event.preventDefault();
+			projection.scale(1000000)
+						.rotate([122.4742638, 0])
+ 						.center([0, 37.74336457]);
+						d3.selectAll("path")
+						 .transition()
+						 .duration(1000)
+						 .attr("d", path);
+						 d3.selectAll("circle")
+						 .transition()
+						 .duration(1000)
+						 .attr("cx", function(d){
+							return projection([d.Longitude, d.Latitude])[0];
+						})
+						.attr("cy", function(d){
+							return projection([d.Longitude, d.Latitude])[1];
+						});
+					}
+	$(".AllNeighborhoods").on("click", AllNeighborhoods);
+	$(".Fidi").on("click", Fidi);
+	$(".Dwntwn").on("click", Dwntwn);
+	$(".SOMA").on("click", Soma);
+	$(".WesternSoma").on("click", WesternSoma);
+	$(".Mission").on("click", Mission);
+	$(".OuterMission").on("click", OuterMission);
+	$(".PotreroHill").on("click", ProtreroHill);
+	$(".Bayview").on("click", Bayview);
+	$(".Marina").on("click", Marina);
+	$(".NorthBeach").on("click", NorthBeach);
+	$(".NobHill").on("click", NobHill);
+	$(".Chinatown").on("click", Chinatown);
+	$(".WesternAddition").on("click", WesternAddition);
+	$(".InnerRichmond").on("click", InnerRichmond);
+	$(".OuterRichmond").on("click", OuterRichmond);
+	$(".Seacliff").on("click", Seacliff);
+	$(".PresidioHeights").on("click", PresidioHeights);
+	$(".HaightAshbury").on("click", HaightAshbury);
+	$(".InnerSunset").on("click", InnerSunset);
+	$(".OuterSunset").on("click", OuterSunset);
+	$(".BernalHeights").on("click", BernalHeights);
+	$(".OceanView").on("click", OceanView);
+	$(".CrockerAmazon").on("click", CrockerAmazon);
+	$(".DiamondHeights").on("click", DiamondHeights);
+	$(".Parkside").on("click", Parkside);
+
+})

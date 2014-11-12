@@ -50,7 +50,7 @@
 										%li
 											%a.SOMA{:href => "#"} SOMA
 										%li
-											%a.outersoma{:href => "#"} Outer SOMA
+											%a.WesternSoma{:href => "#"} Western SOMA
 										%li
 											%a.Mission{:href => "#"} Mission
 										%li
@@ -107,18 +107,19 @@
 							.small-2.columns
 								%button.reset Reset
 						.row
-							.small-2.columns.key
-								%p Passed
-								#red
-							.small-2.columns.key
-								%p Failed
-								#blue
-							.small-2.columns.key
-								%p N/A
-								#gray
-							.small-2.columns.end.key
-								%p Exempt
-								#exempt
+							.small-7.columns.end
+								.small-2.columns.key
+									%p Passed
+									#red.dot
+								.small-2.columns.key
+									%p Failed
+									#blue.dot
+								.small-2.columns.key
+									%p N/A
+									#gray.dot
+								.small-2.columns.end.key
+									%p Exempt
+									#exempt.dot
 					#vis.small-12.columns.end
 				.row
 			%ol.joyride-list{:data => {:joyride => true}}

@@ -44,7 +44,7 @@ svg{
 	// -webkit-transform: scale(1.05) rotate(-15deg);
 	// transform: scale(1.05) rotate(-15deg) translate(-12.5%, 3%);
 	z-index: -1;
-	margin-left: 30%;
+	// margin-left: 30%;
 	bottom: 0;
 }
 
@@ -191,9 +191,13 @@ ul{
 	max-width: 88%;
 	max-height: 350px;
 	overflow: auto;
+	// -webkit-transition
 	li{
 		&:hover{
 			background-color: #FFFFFF;
+		}
+		&:active{
+			background-color: $green;
 		}
 	}
 
@@ -228,13 +232,17 @@ ul{
 }
 
 #red, #blue, #gray, #exempt{
-	display: inline;
-	min-width: 10px;
-	min-height: 10px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	
 }
 
+.dot{
+	width: 10px;
+	height: 10px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	z-index: 500;
+	display: inline-block;
+}
 
 ::-webkit-scrollbar { 
     display: none; 
