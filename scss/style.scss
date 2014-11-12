@@ -164,6 +164,7 @@ button{
 }
 
 button.reset{
+	position: relative;
 	background-color: none;
 	cursor: pointer;
 	border: 2px solid $pink;
@@ -175,6 +176,10 @@ button.reset{
 	background-color: $pink;
 	}
 }
+#resetcheck{
+		position: absolute;
+		left: 100px;
+	}
 
 ul{
 	li{
@@ -263,6 +268,8 @@ ul{
 #exempt{
 	background-color: #222222;
 }
+
+
 
 #footer{
 	margin-top: 1%;

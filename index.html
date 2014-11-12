@@ -20,11 +20,13 @@
       </div>
       <div id='wrapper'>
         <div class='row'>
-          <div class='small-1 columns' id='logoContainer'>
-            <img id='logo' src='../Locality/img/Lightbulbcity.svg'>
-          </div>
-          <div class='small-11 columns' id='title'>
-            <h1>Electri<span id="city">City</span>&nbsp<span id="desc">A visualization of 1,896 commerical buildings and their annual San Francisco energy audit results from 2010-2013.</h1>
+          <div class='small-10 columns end'>
+            <div class='small-1 columns' id='logoContainer'>
+              <img id='logo' src='../Locality/img/Lightbulbcity.svg'>
+            </div>
+            <div class='small-11 columns' id='title'>
+              <h1>Electri<span id="city">City</span>&nbsp<span id="desc">A visualization of 1,896 commerical buildings and their annual San Francisco energy audit results from 2010-2013.</h1>
+            </div>
           </div>
         </div>
         <div class='row'>
@@ -131,7 +133,7 @@
                     </li>
                   </ul>
                 </div>
-                <div class='small-4 columns'>
+                <div class='small-4 columns' id='alert'>
                   <button aria-expanded='false' class='noselect' data-dropdown='drop3' href='#' id='status'>Status</button>
                   <ul aria_hidden='true' class='f-dropdown' data-dropdown-content id='drop3'>
                     <li>
@@ -178,11 +180,6 @@
         </div>
         <div class='row'></div>
       </div>
-      <ol class='joyride-list' data-joyride>
-        <li data_id='status' data_options='prev_button: false' data_text='status'>
-          <p>Please select a year before selecting a status.</p>
-        </li>
-      </ol>
       <div class='row'>
         <div class='small-12 columns' id='footer'>
           <p>&#169; 2014 Andy Davies. Coded for USF's Information Visualization course on Nov. 9,2014. Energy audit dataset courtesy of <a href="https://data.sfgov.org/">DataSF</a></p>

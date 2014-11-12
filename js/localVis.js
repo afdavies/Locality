@@ -62,7 +62,7 @@ $(document).ready(function(){
 				 
 
 			 //load in CSV, create groups and building circles
-			d3.csv('csv/CommercialBuildingEnergy3.csv', function(data){
+			d3.csv('csv/CommercialBuildingEnergy4.csv', function(data){
 					g = svg.selectAll("g")
 							.data(data)
 							.enter()
@@ -114,11 +114,17 @@ $(document).ready(function(){
 					
 					//Initial View Reset
 					$(".reset").click(function(){
+						event.preventDefault()
 						$("#year").html("2010");
 						$("#neighborhood").html("All Neighborhoods");
+						$("#status").html("All Results")
+						$(".reset").html("View reset!").delay(1000).queue(function(){
+							$(this).blur();
+							$(this).html("Reset");
+						});
 						yearCheck = "2010"
 						locationCheck = "AllNeighborhoods"
-						statusCheck = undefined;
+						statusCheck = "AllResults";
 						//Reset scale and rotation on whole city
 						projection.translate([960/2+75, 550/2+50])
 						   .scale(240000)
@@ -152,6 +158,7 @@ $(document).ready(function(){
 
 					//Year Filter
 					$("#drop1>li>a").click(function(d){
+						event.preventDefault();
 						//Scale map
 						 // All the other stuff
 						var checkClass = $(this).parent().siblings().children("a").hasClass("selected");
@@ -177,69 +184,156 @@ $(document).ready(function(){
 						.duration(1000)
 						.attr("stroke-width", "0px")
 						.attr("r", function(d){
-							if(locationCheck == undefined){
-								return 5;
-							}else if(locationCheck == "AllNeighborhoods"){
-								if(yearCheck == "2010"){
-										if(statusCheck == d.Status2010){
-											return 5;
-										}else{
-											return 0;
-										}
-									}else if(yearCheck == "2011"){
-										if(statusCheck == d.Status2011){
-											return 5
-										}else{
-											return 0
-										}
-									}else if(yearCheck == "2012"){
-										if(statusCheck == d.Status2012){
-											return 5
-										}else{
-											return 0
-										}
-									}else if(yearCheck == "2013"){
-										if(statusCheck == d.Status2013){
-											return 5
-										}else{
-											return 0
-										}
-									}
-							}else if(d.Neighborhood == locationCheck){
-								if(statusCheck == undefined || statusCheck == "AllResults"){
-									if(yearCheck == "2010"){
-										if(statusCheck == d.Status2010){
-											return 5;
-										}else{
-											return 0;
-										}
-									}
-									if(yearCheck == "2011"){
-										if(statusCheck == d.Status2011){
-											return 5
-										}else{
-											return 0
-										}
-									}
-									if(yearCheck == "2012"){
-										if(statusCheck == d.Status2012){
-											return 5
-										}else{
-											return 0
-										}
-									}
-									if(yearCheck == "2013"){
-										if(statusCheck == d.Status2013){
-											return 5
-										}else{
-											return 0
-										}
+							if(yearCheck == "2010"){
+								if(locationCheck == undefined || locationCheck == "AllNeighborhoods"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+										console.log(yearCheck)
+										console.log(locationCheck)
+										console.log(statusCheck)
+									}else if(statusCheck == d.Status2010 ){
+										return 5
 									}else{
-										return 5;	
+										return 0
 									}
+								}else if(locationCheck == d.Neighborhood){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2010 ){
+										return 5
+									}else{
+										return 0
+									}
+								}else{
+									return 0
+								}
+							}else if(yearCheck == "2011"){
+								if(locationCheck == undefined || locationCheck == "AllNeighborhoods"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2011 ){
+										return 5
+									}else{
+										return 0
+									}
+								}else if(locationCheck == d.Neighborhood){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2011 ){
+										return 5
+									}else{
+										return 0
+									}
+								}else{
+									return 0
+								}
+							}else if(yearCheck == "2012"){
+								if(locationCheck == undefined || locationCheck == "AllNeighborhoods"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2012 ){
+										return 5
+									}else{
+										return 0
+									}
+								}else if(locationCheck == d.Neighborhood){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2012 ){
+										return 5
+									}else{
+										return 0
+									}
+								}else{
+									return 0
+								}
+							}else if(yearCheck == "2013"){
+								if(locationCheck == undefined || locationCheck == "AllNeighborhoods"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2013 ){
+										return 5
+									}else{
+										return 0
+									}
+								}else if(locationCheck == d.Neighborhood){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2013 ){
+										return 5
+									}else{
+										return 0
+									}
+								}else{
+									return 0
+								}
+							}else{
+								return 0
 							}
-						}
-					})
+						})
+						// 	if(locationCheck == undefined){
+						// 		return 5;
+						// 	}else if(locationCheck == "AllNeighborhoods"){
+						// 		if(yearCheck == "2010"){
+						// 				if(statusCheck == d.Status2010){
+						// 					return 5;
+						// 				}else{
+						// 					return 0;
+						// 				}
+						// 			}else if(yearCheck == "2011"){
+						// 				if(statusCheck == d.Status2011){
+						// 					return 5
+						// 				}else{
+						// 					return 0
+						// 				}
+						// 			}else if(yearCheck == "2012"){
+						// 				if(statusCheck == d.Status2012){
+						// 					return 5
+						// 				}else{
+						// 					return 0
+						// 				}
+						// 			}else if(yearCheck == "2013"){
+						// 				if(statusCheck == d.Status2013){
+						// 					return 5
+						// 				}else{
+						// 					return 0
+						// 				}
+						// 			}
+						// 	}else if(d.Neighborhood == locationCheck){
+						// 		if(statusCheck == undefined || statusCheck == "AllResults"){
+						// 			if(yearCheck == "2010"){
+						// 				if(statusCheck == d.Status2010){
+						// 					return 5;
+						// 				}else{
+						// 					return 0;
+						// 				}
+						// 			}
+						// 			if(yearCheck == "2011"){
+						// 				if(statusCheck == d.Status2011){
+						// 					return 5
+						// 				}else{
+						// 					return 0
+						// 				}
+						// 			}
+						// 			if(yearCheck == "2012"){
+						// 				if(statusCheck == d.Status2012){
+						// 					return 5
+						// 				}else{
+						// 					return 0
+						// 				}
+						// 			}
+						// 			if(yearCheck == "2013"){
+						// 				if(statusCheck == d.Status2013){
+						// 					return 5
+						// 				}else{
+						// 					return 0
+						// 				}
+						// 			}else{
+						// 				return 5;	
+						// 			}
+						// 	}
+						// }
+					// })
 						.style("fill", function(d) {
 							if (yearCheck == "2010"){
 								if(d.Status2010 == "Complied"){
@@ -279,6 +373,7 @@ $(document).ready(function(){
 					
 					//Neighborhood Filter
 					$("#drop2>li>a").on("mouseenter", function(d){
+						event.preventDefault()
 						var myClass = $(this).attr("class");
 						locationCheck = myClass;
 						var buttonText = $(this).text();
@@ -296,34 +391,125 @@ $(document).ready(function(){
 						.transition()
 						.duration(1000)
 						.attr("r", function(d) {
-							if(yearCheck == undefined){
-								if(d.Neighborhood == locationCheck){
-									return 5;
-								}else if(locationCheck == undefined || locationCheck == "AllNeighborhoods"){
-									return 5;
-								}
-							}else if(d.Neighborhood == locationCheck){
-								if(statusCheck == undefined){
-									return 5;
-								}else if(yearCheck == "2010" && d.Status2010 == statusCheck){
-									return 5;
-								}else if(yearCheck == "2011" && d.Status2011 == statusCheck){
-									return 5;
-								}else if(yearCheck == "2012" && d.Status2012 == statusCheck){
-									return 5;
-								}else if(yearCheck == "2013" && d.Status2013 == statusCheck){
-									return 5;
+							if(locationCheck == undefined || locationCheck == "AllNeighborhoods"){
+								if(yearCheck == undefined){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+										console.log(yearCheck)
+										console.log(locationCheck)
+										console.log(statusCheck)
+									}
+								}else if(yearCheck == "2010"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2010){
+										return 5
+									}else{
+										return 0
+									}
+								}else if(yearCheck == "2011"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2012){
+										return 5
+									}else{
+										return 0
+									}
+								}else if(yearCheck == "2013"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2013){
+										return 5
+									}else{
+										return 0
+									}
+								}else if(yearCheck == "2011"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2013 ){
+										return 5
+									}else{
+										return 0
+									}
 								}else{
 									return 0
 								}
-							}else{
-								return 0; 
+							}else if(locationCheck == d.Neighborhood){
+								if(yearCheck == undefined){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+										console.log(yearCheck)
+										console.log(locationCheck)
+										console.log(statusCheck)
+									}
+								}else if(yearCheck == "2010"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2010){
+										return 5
+									}else{
+										return 0
+									}
+								}else if(yearCheck == "2011"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2012){
+										return 5
+									}else{
+										return 0
+									}
+								}else if(yearCheck == "2013"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2013){
+										return 5
+									}else{
+										return 0
+									}
+								}else if(yearCheck == "2011"){
+									if(statusCheck == undefined || statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == d.Status2013 ){
+										return 5
+									}else{
+										return 0
+									}
+								}else{
+									return 0
+								}
+							}else{ 
+								return 0
 							}
 						})
+							// if(yearCheck == undefined){
+							// 	if(d.Neighborhood == locationCheck){
+							// 		return 5;
+							// 	}else if(locationCheck == undefined || locationCheck == "AllNeighborhoods"){
+							// 		return 5;
+							// 	}
+							// }else if(d.Neighborhood == locationCheck){
+							// 	if(statusCheck == undefined){
+							// 		return 5;
+							// 	}else if(yearCheck == "2010" && d.Status2010 == statusCheck){
+							// 		return 5;
+							// 	}else if(yearCheck == "2011" && d.Status2011 == statusCheck){
+							// 		return 5;
+							// 	}else if(yearCheck == "2012" && d.Status2012 == statusCheck){
+							// 		return 5;
+							// 	}else if(yearCheck == "2013" && d.Status2013 == statusCheck){
+							// 		return 5;
+							// 	}else{
+							// 		return 0
+							// 	}
+							// }else{
+							// 	return 0; 
+							// }
+					// 	})
 					})
 
 					//Status Filter
 					$("#drop3>li>a").click(function(d){
+						event.preventDefault()
 						var checkClass = $(this).parent().siblings().children("a").hasClass("selected");
 						var $siblings = $(this).parent().siblings().children("a");
 						event.preventDefault();
@@ -342,135 +528,381 @@ $(document).ready(function(){
 						d3.selectAll("circle")
 						.transition()
 						.attr("r", function(d){
-							if(statusCheck == "AllResults"){
-								if(d.Neighborhood == locationCheck || locationCheck == undefined){
-									return 5;
-									console.log("all")
-								}else{
-									return 0;
-								}
-							}else if(d.Neighborhood == locationCheck){
-								if(yearCheck = "2010"){
-									if(d.Status2010 == statusCheck){
-										return 5;
-									}else{
-										return 0;
+							if(yearCheck == "2010"){
+								if(locationCheck == "AllNeighborhoods" || locationCheck == undefined){
+									if(statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == "Complied"){
+										if(d.Status2010 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "DidNotComply"){
+										if(d.Status2010 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "NA"){
+										if(d.Status2010 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "Complied"){
+										if(d.Status2010 == statusCheck){
+											return 5
+										}else{
+												return 0
+											}
 									}
-								}else if(yearCheck == "2011"){
-									if(d.Status2011 == statusCheck){
-										return 5;
-									}else{
-										return 0;
-									}
-								}else if(yearCheck == "2012"){
-									if(d.Status2012 == statusCheck){
-										return 5;
-									}else{
-										return 0;
-									}
-								}else if(yearCheck == "2013"){
-									if(d.Status2013 == statusCheck){
-										return 5;
-									}else{
-										return 0;
-									}
-								}else{
-									return 0;
-								}
-							}else if(locationCheck == undefined){
-								if(yearCheck = "2010"){
-									if(d.Status2010 == statusCheck){
-										return 5;
-									}else{
-										return 0
-									}
-								}
-								if(yearCheck = "2011"){
-									if(d.Status2011 == statusCheck){
-										return 5;
-									}else{
-										return 0
-									}
-								}
-								if(yearCheck = "2012"){
-									if(d.Status2012 == statusCheck){
-										return 5;
-									}else{
-										return 0
-									}
-								}
-								if(yearCheck = "2013"){
-									if(d.Status2013 == statusCheck){
-										return 5;
-									}else{
-										return 0
-									}
-								}else{
-									return 0;
-								}
-							}else if(locationCheck == "AllNeighborhoods"){
-										if(yearCheck = "2010"){
-									if(d.Status2010 == statusCheck){
-										return 5;
-									}else{
-										return 0;
-									}
-								}else if(yearCheck = "2011"){
-									if(d.Status2011 == statusCheck){
-										return 5;
-									}else{
-										return 0;
-									}
-								}else if(yearCheck = "2012"){
-									if(d.Status2012 == statusCheck){
-										return 5;
-									}else{
-										return 0;
-									}
-								}else if(yearCheck = "2013"){
-									if(d.Status2013 == statusCheck){
-										return 5;
-									}else{
-										return 0;
-									}
-								}else{
-									return 0;
-								}
-							}else if(locationCheck == undefined){
-								if(yearCheck = "2010"){
-									if(d.Status2010 == statusCheck){
-										return 5;
-									}else{
-										return 0
+								}else if(d.Neighborhood == locationCheck){
+									if(statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == "Complied"){
+										if(d.Status2010 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "DidNotComply"){
+										if(d.Status2010 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "NA"){
+										if(d.Status2010 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "Complied"){
+										if(d.Status2010 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
 									}
 								}
-								if(yearCheck = "2011"){
-									if(d.Status2011 == statusCheck){
-										return 5;
-									}else{
-										return 0
+								else{
+									return 0
+								}
+							}else if(yearCheck == "2011"){
+								if(locationCheck == "AllNeighborhoods" || locationCheck == undefined){
+									if(statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == "Complied"){
+										if(d.Status2011 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "DidNotComply"){
+										if(d.Status2011 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "NA"){
+										if(d.Status2011 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "Complied"){
+										if(d.Status2011 == statusCheck){
+											return 5
+										}else{
+												return 0
+											}
+									}
+								}else if(d.Neighborhood == locationCheck){
+									if(statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == "Complied"){
+										if(d.Status2011 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "DidNotComply"){
+										if(d.Status2011 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "NA"){
+										if(d.Status2011 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "Complied"){
+										if(d.Status2011 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
 									}
 								}
-								if(yearCheck = "2012"){
-									if(d.Status2012 == statusCheck){
-										return 5;
-									}else{
-										return 0
+								else{
+									return 0
+								}
+							}if(yearCheck == "2012"){
+								if(locationCheck == "AllNeighborhoods" || locationCheck == undefined){
+									if(statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == "Complied"){
+										if(d.Status2012 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "DidNotComply"){
+										if(d.Status2012 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "NA"){
+										if(d.Status2012 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "Complied"){
+										if(d.Status2012 == statusCheck){
+											return 5
+										}else{
+												return 0
+											}
+									}
+								}else if(d.Neighborhood == locationCheck){
+									if(statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == "Complied"){
+										if(d.Status2012 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "DidNotComply"){
+										if(d.Status2012 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "NA"){
+										if(d.Status2012 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "Complied"){
+										if(d.Status2012 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
 									}
 								}
-								if(yearCheck = "2013"){
-									if(d.Status2013 == statusCheck){
-										return 5;
-									}else{
-										return 0
-									}
-								}else{
-									return 0;
+								else{
+									return 0
 								}
-							}else{ 
-								return 0;
+							}if(yearCheck == "2013"){
+								if(locationCheck == "AllNeighborhoods" || locationCheck == undefined){
+									if(statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == "Complied"){
+										if(d.Status2013 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "DidNotComply"){
+										if(d.Status2013 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "NA"){
+										if(d.Status2013 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "Complied"){
+										if(d.Status2013 == statusCheck){
+											return 5
+										}else{
+												return 0
+											}
+									}
+								}else if(d.Neighborhood == locationCheck){
+									if(statusCheck == "AllResults"){
+										return 5
+									}else if(statusCheck == "Complied"){
+										if(d.Status2013 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "DidNotComply"){
+										if(d.Status2013 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "NA"){
+										if(d.Status2013 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}else if(statusCheck == "Complied"){
+										if(d.Status2013 == statusCheck){
+											return 5
+										}else{
+											return 0
+										}
+									}
+								}
+								else{
+									return 0
+								}
 							}
 						})
+						// 	if(statusCheck == "AllResults"){
+						// 		if(d.Neighborhood == locationCheck || locationCheck == undefined){
+						// 			return 5;
+						// 			console.log("all")
+						// 		}else{
+						// 			return 0;
+						// 		}
+						// 	}else if(d.Neighborhood == locationCheck){
+						// 		if(yearCheck = "2010"){
+						// 			if(d.Status2010 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0;
+						// 			}
+						// 		}else if(yearCheck == "2011"){
+						// 			if(d.Status2011 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0;
+						// 			}
+						// 		}else if(yearCheck == "2012"){
+						// 			if(d.Status2012 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0;
+						// 			}
+						// 		}else if(yearCheck == "2013"){
+						// 			if(d.Status2013 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0;
+						// 			}
+						// 		}else{
+						// 			return 0;
+						// 		}
+						// 	}else if(locationCheck == undefined){
+						// 		if(yearCheck = "2010"){
+						// 			if(d.Status2010 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0
+						// 			}
+						// 		}
+						// 		if(yearCheck = "2011"){
+						// 			if(d.Status2011 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0
+						// 			}
+						// 		}
+						// 		if(yearCheck = "2012"){
+						// 			if(d.Status2012 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0
+						// 			}
+						// 		}
+						// 		if(yearCheck = "2013"){
+						// 			if(d.Status2013 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0
+						// 			}
+						// 		}else{
+						// 			return 0;
+						// 		}
+						// 	}else if(locationCheck == "AllNeighborhoods"){
+						// 				if(yearCheck = "2010"){
+						// 			if(d.Status2010 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0;
+						// 			}
+						// 		}else if(yearCheck = "2011"){
+						// 			if(d.Status2011 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0;
+						// 			}
+						// 		}else if(yearCheck = "2012"){
+						// 			if(d.Status2012 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0;
+						// 			}
+						// 		}else if(yearCheck = "2013"){
+						// 			if(d.Status2013 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0;
+						// 			}
+						// 		}else{
+						// 			return 0;
+						// 		}
+						// 	}else if(locationCheck == undefined){
+						// 		if(yearCheck = "2010"){
+						// 			if(d.Status2010 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0
+						// 			}
+						// 		}
+						// 		if(yearCheck = "2011"){
+						// 			if(d.Status2011 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0
+						// 			}
+						// 		}
+						// 		if(yearCheck = "2012"){
+						// 			if(d.Status2012 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0
+						// 			}
+						// 		}
+						// 		if(yearCheck = "2013"){
+						// 			if(d.Status2013 == statusCheck){
+						// 				return 5;
+						// 			}else{
+						// 				return 0
+						// 			}
+						// 		}else{
+						// 			return 0;
+						// 		}
+						// 	}else{ 
+						// 		return 0;
+						// 	}
+						// })
 						.style("fill", function(d) {
 							if (yearCheck == "2010"){
 								if(d.Status2010 == "Complied"){
@@ -516,6 +948,12 @@ $(document).ready(function(){
 			$(".loader").addClass("fade")
 		}, 1750)
 	}, 1000);
+	$("#help").click(function(){
+		event.preventDefault()
+		// if(this).hasClass("noselect"){
+
+		// }
+	})
 });
 
 //map zooming - needs to be called AFTER document.ready()
