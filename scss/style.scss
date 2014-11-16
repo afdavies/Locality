@@ -55,11 +55,19 @@ path{
 .loader{
 	margin-top: -1%;
 	width: 100%;
-	height: 100%;
+	height: 110%;
 	background-color: $green;
 	position: absolute;
-	z-index: 1000;
+	z-index: 10000000000000000000000;
 	visibility: visible;
+	img{
+		height: 10%;
+		position: absolute;
+		text-align: center;
+		margin-top: 25%;
+		left: 50%;
+		-webkit-transform: translateX(-50%);	
+	}
 	h1{
 		color: #000;
 		font-family: "Josefin Sans", sans-serif;
@@ -285,4 +293,22 @@ ul{
 	p{
 		text-align: left;
 	}
+}
+
+#tipModal{
+	background-color: $green;
+	border: none;
+	p{
+		font-family: "Source Sans Pro", sans-serif;
+		text-align: center;
+		font-size: 1rem;
+		color: $bgColor;
+	}
+	a{
+		font-size: 1rem;
+		color: $bgColor;
+	}
+}
+.reveal-modal{
+	border: none;
 }

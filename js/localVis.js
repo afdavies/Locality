@@ -14,6 +14,7 @@ var path;
 var tooltip;
 
 $(document).ready(function(){
+			$('#tipModal').foundation('reveal', 'open')
 			//Width and height
 			var w = 1000;
 			var h = 550;
@@ -58,8 +59,6 @@ $(document).ready(function(){
 				   .attr("stroke", "#74E896")
 				   .attr("stroke-width", "1px");
 				   console.log(path);
-
-				 
 
 			 //load in CSV, create groups and building circles
 			d3.csv('csv/CommercialBuildingEnergy4.csv', function(data){
@@ -271,69 +270,6 @@ $(document).ready(function(){
 								return 0
 							}
 						})
-						// 	if(locationCheck == undefined){
-						// 		return 5;
-						// 	}else if(locationCheck == "AllNeighborhoods"){
-						// 		if(yearCheck == "2010"){
-						// 				if(statusCheck == d.Status2010){
-						// 					return 5;
-						// 				}else{
-						// 					return 0;
-						// 				}
-						// 			}else if(yearCheck == "2011"){
-						// 				if(statusCheck == d.Status2011){
-						// 					return 5
-						// 				}else{
-						// 					return 0
-						// 				}
-						// 			}else if(yearCheck == "2012"){
-						// 				if(statusCheck == d.Status2012){
-						// 					return 5
-						// 				}else{
-						// 					return 0
-						// 				}
-						// 			}else if(yearCheck == "2013"){
-						// 				if(statusCheck == d.Status2013){
-						// 					return 5
-						// 				}else{
-						// 					return 0
-						// 				}
-						// 			}
-						// 	}else if(d.Neighborhood == locationCheck){
-						// 		if(statusCheck == undefined || statusCheck == "AllResults"){
-						// 			if(yearCheck == "2010"){
-						// 				if(statusCheck == d.Status2010){
-						// 					return 5;
-						// 				}else{
-						// 					return 0;
-						// 				}
-						// 			}
-						// 			if(yearCheck == "2011"){
-						// 				if(statusCheck == d.Status2011){
-						// 					return 5
-						// 				}else{
-						// 					return 0
-						// 				}
-						// 			}
-						// 			if(yearCheck == "2012"){
-						// 				if(statusCheck == d.Status2012){
-						// 					return 5
-						// 				}else{
-						// 					return 0
-						// 				}
-						// 			}
-						// 			if(yearCheck == "2013"){
-						// 				if(statusCheck == d.Status2013){
-						// 					return 5
-						// 				}else{
-						// 					return 0
-						// 				}
-						// 			}else{
-						// 				return 5;	
-						// 			}
-						// 	}
-						// }
-					// })
 						.style("fill", function(d) {
 							if (yearCheck == "2010"){
 								if(d.Status2010 == "Complied"){

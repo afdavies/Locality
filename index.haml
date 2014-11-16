@@ -2,12 +2,16 @@
 	%head	
 		%meta{:charset =>"utf-8"}
 		%meta{:name =>"viewport", :content =>"width=device-width, initial-scale=1.0"}
-		%title Locality
+		%meta{:property => "og:image", :content => "http://www.afdavies.com/ElectriCity/img/lightbulbthumbnail.png"}
+		%meta{:property => "og:type", :content => "website"}
+		%meta{:property => "og:url", :content => "http://afdavies.com/ElectriCity/"}
+		%meta{:property => "og:title", :content => "ElectriCity"}
+		%title ElectriCity
 		%link{:rel =>"stylesheet", :href =>"stylesheets/app.css"}
 		%link{:rel =>"stylesheet", :href =>"stylesheets/style.css"}
 		%link{:href => "http://fonts.googleapis.com/css?family=Josefin+Sans:300|Source+Sans+Pro:400,700", :rel => 'stylesheet', :type => "text/css"}
 		%link{:rel => "shortcut icon", :href => "../Locality/img/favicon.ico", :type => "image/x-icon"}
-		%link{:rel => "icon", :href => "../Locality/img/favicon.ico", :type =>"image/x-icon"}
+		%link{:rel => "icon", :href => "../ElectriCity/img/favicon.ico", :type =>"image/x-icon"}
 		%script{:src =>"bower_components/modernizr/modernizr.js"}
 		%script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"}
 		%script{:src => "http://d3js.org/d3.v3.min.js"}
@@ -16,12 +20,13 @@
 		%script{:src => "js/localVis.js"}	
 		%body
 			.loader
+				%img{:src => "../ElectriCity/img/Lightbulbcity_black.svg"}
 				%h1 LOADING
 			#wrapper
 				.row
-					.small-10.columns.end
+					.small-12.columns.end
 						#logoContainer.small-1.columns
-							%img#logo{:src => "../Locality/img/Lightbulbcity.svg"}
+							%img#logo{:src => "../ElectriCity/img/Lightbulbcity.svg"}
 						#title.small-11.columns
 							%h1 Electri<span id="city">City</span>&nbsp<span id="desc">A visualization of 1,896 commerical buildings and their annual San Francisco energy audit results from 2010-2013. 
 				.row
@@ -111,10 +116,10 @@
 							.small-7.columns.end
 								.small-2.columns.key
 									%p Passed
-									#red.dot
+									#blue.dot
 								.small-2.columns.key
 									%p Failed
-									#blue.dot
+									#red.dot
 								.small-2.columns.key
 									%p N/A
 									#gray.dot
@@ -126,10 +131,11 @@
 			.row 
 				#footer.small-12.columns
 					%p &#169; 2014 Andy Davies. Coded for USF's Information Visualization course on Nov. 9,2014. Energy audit dataset courtesy of <a href="https://data.sfgov.org/">DataSF</a> 
-
+			-# #tipModal.reveal-modal.small
+			-# 	%p Please select a year before filtering by audit status.
 
 		%script{:src => "bower_components/jquery/dist/jquery.min.js"}
 		%script{:src => "bower_components/foundation/js/foundation.min.js"}
 		%script{:src => "js/app.js"}
 		%script
-			$(document).foundation().foundation('joyride', 'start');
+			$(document).foundation('joyride', 'start');

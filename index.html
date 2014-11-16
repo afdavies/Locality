@@ -2,12 +2,16 @@
   <head>
     <meta charset='utf-8'>
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
-    <title>Locality</title>
+    <meta content='http://www.afdavies.com/ElectriCity/img/lightbulbthumbnail.png' property='og:image'>
+    <meta content='website' property='og:type'>
+    <meta content='http://afdavies.com/ElectriCity/' property='og:url'>
+    <meta content='ElectriCity' property='og:title'>
+    <title>ElectriCity</title>
     <link href='stylesheets/app.css' rel='stylesheet'>
     <link href='stylesheets/style.css' rel='stylesheet'>
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:300|Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
     <link href='../Locality/img/favicon.ico' rel='shortcut icon' type='image/x-icon'>
-    <link href='../Locality/img/favicon.ico' rel='icon' type='image/x-icon'>
+    <link href='../ElectriCity/img/favicon.ico' rel='icon' type='image/x-icon'>
     <script src='bower_components/modernizr/modernizr.js'></script>
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
     <script src='http://d3js.org/d3.v3.min.js'></script>
@@ -16,13 +20,14 @@
     <script src='js/localVis.js'></script>
     <body>
       <div class='loader'>
+        <img src='../ElectriCity/img/Lightbulbcity_black.svg'>
         <h1>LOADING</h1>
       </div>
       <div id='wrapper'>
         <div class='row'>
-          <div class='small-10 columns end'>
+          <div class='small-12 columns end'>
             <div class='small-1 columns' id='logoContainer'>
-              <img id='logo' src='../Locality/img/Lightbulbcity.svg'>
+              <img id='logo' src='../ElectriCity/img/Lightbulbcity.svg'>
             </div>
             <div class='small-11 columns' id='title'>
               <h1>Electri<span id="city">City</span>&nbsp<span id="desc">A visualization of 1,896 commerical buildings and their annual San Francisco energy audit results from 2010-2013.</h1>
@@ -159,11 +164,11 @@
               <div class='small-7 columns end'>
                 <div class='small-2 columns key'>
                   <p>Passed</p>
-                  <div class='dot' id='red'></div>
+                  <div class='dot' id='blue'></div>
                 </div>
                 <div class='small-2 columns key'>
                   <p>Failed</p>
-                  <div class='dot' id='blue'></div>
+                  <div class='dot' id='red'></div>
                 </div>
                 <div class='small-2 columns key'>
                   <p>N/A</p>
@@ -190,7 +195,7 @@
     <script src='bower_components/foundation/js/foundation.min.js'></script>
     <script src='js/app.js'></script>
     <script>
-      $(document).foundation().foundation('joyride', 'start');
+      $(document).foundation('joyride', 'start');
     </script>
   </head>
 </html>
